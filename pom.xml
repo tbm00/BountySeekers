@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mrkelpy</groupId>
+    <artifactId>BountySeekers</artifactId>
+    <version>1.2.2</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>core</module>
+        <module>core-nms</module>
+        <module>Crucible_1.7.10</module>
+        <module>Spigot_1.7.x</module>
+        <module>Spigot_1.8.x</module>
+        <module>Spigot_1.9.x</module>
+        <module>Spigot_1.10.x</module>
+        <module>Spigot_1.11.x</module>
+        <module>Spigot_1.12.x</module>
+        <module>Spigot_1.13.x</module>
+        <module>Spigot_1.14.x</module>
+        <module>Spigot_1.15.x</module>
+        <module>Spigot_1.16.x</module>
+        <module>Spigot_1.17.x</module>
+        <module>Spigot_1.18.x</module>
+        <module>Spigot_1.19.x</module>
+        <module>Spigot_1.20.x</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>
