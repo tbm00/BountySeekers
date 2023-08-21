@@ -5,7 +5,7 @@
     <parent>
         <artifactId>BountySeekers</artifactId>
         <groupId>com.mrkelpy</groupId>
-        <version>1.2.2</version>
+        <version>1.2.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -38,7 +38,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.azbh111</groupId>
-            <artifactId>craftbukkit-1.11.2</artifactId>
+            <artifactId>craftbukkit-1.12.2</artifactId>
             <version>R</version>
             <scope>provided</scope>
         </dependency>

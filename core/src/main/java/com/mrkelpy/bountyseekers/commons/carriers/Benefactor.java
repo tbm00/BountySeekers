@@ -1,7 +1,6 @@
 package com.mrkelpy.bountyseekers.commons.carriers;
 
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -33,7 +32,6 @@ public class Benefactor {
     /**
      * @return The player.
      */
-    @Getter
     public Player getPlayer() {
         return this.player;
     }
@@ -41,7 +39,6 @@ public class Benefactor {
     /**
      * @return Whether the player is anonymous or not.
      */
-    @Getter
     public boolean isAnonymous() {
         return this.anonymous;
     }
@@ -49,7 +46,6 @@ public class Benefactor {
     /**
      * @return The inventory of the player.
      */
-    @Getter
     public Inventory getInventory() {
         return this.inventory;
     }

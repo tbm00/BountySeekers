@@ -5,7 +5,6 @@ import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
 import com.mrkelpy.bountyseekers.commons.utils.SerializationUtils;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -69,17 +68,14 @@ public class Bounty {
         this.raisedStackCount = 0;
     }
 
-    @Getter
     public String getTarget() {
         return this.target;
     }
 
-    @Getter
     public List<ItemStack> getRewards() {
         return this.rewards;
     }
 
-    @Getter
     public int getAdditionCount() {
         return this.raisedStackCount;
     }

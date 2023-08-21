@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Spigot_1.20.x:jar">
+    <output-path>$USER_HOME$/AppData/Roaming/.MCSMLauncher/servers/BountySeekers20/plugins</output-path>
+    <root id="archive" name="Spigot_1.20.x.jar">
+      <element id="module-output" name="Spigot_1.20.x" />
+      <element id="module-output" name="core" />
+      <element id="module-output" name="core-nms" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
