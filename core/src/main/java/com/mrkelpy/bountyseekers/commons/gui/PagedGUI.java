@@ -2,8 +2,6 @@ package com.mrkelpy.bountyseekers.commons.gui;
 
 import com.mrkelpy.bountyseekers.commons.utils.GUIUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -67,12 +65,10 @@ public abstract class PagedGUI implements Listener {
         this.sendToPage(this.page);
     }
 
-    @Getter
     public List<ItemStack> getItems() {
         return this.itemList;
     }
 
-    @Setter
     public void setItems(List<ItemStack> itemList) {
         this.itemList = itemList;
     }
@@ -166,7 +162,6 @@ public abstract class PagedGUI implements Listener {
     /**
      * @return The current page of the PagedGUI.
      */
-    @Getter
     protected int getPage() {
         return this.page;
     }

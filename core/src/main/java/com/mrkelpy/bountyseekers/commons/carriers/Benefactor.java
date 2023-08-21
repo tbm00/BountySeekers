@@ -51,7 +51,7 @@ public class Benefactor {
     }
 
     /**
-     * Retruns the player's UUID with a suffix if they're anonymous, otherwise
+     * Returns the player's UUID with a suffix if they're anonymous, otherwise
      * return the UUID normally.
      *
      * @return The player's UUID.
