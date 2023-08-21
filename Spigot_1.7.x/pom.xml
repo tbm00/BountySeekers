@@ -37,7 +37,7 @@
             <groupId>com.github.azbh111</groupId>
             <artifactId>craftbukkit-1.7.10</artifactId>
             <version>R</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.mrkelpy</groupId>
@@ -49,7 +49,6 @@
             <groupId>com.mrkelpy</groupId>
             <artifactId>core-nms</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -19,7 +19,7 @@ def copy_and_zip_files(source_folder: str, target_folder: str) -> None:
     # Iterate through subdirectories, copy files, and zip them
     for root, _, files in os.walk(source_folder):
         for filename in files:
-            if "shaded" in filename:
+            if "shaded" in filename and 'core' not in filename and 'nms' not in filename:
                 parts = filename.split("-")
                 file_type = parts[0].split("_")[0]
                 version_a = parts[0].split("_")[1]
@@ -28,11 +28,11 @@ def copy_and_zip_files(source_folder: str, target_folder: str) -> None:
                 if auto_version == "0.0.0":
                     auto_version = version_b
 
-                new_filename = f"BountySeekers-{file_type}-{version_a}-{version_b}"
+                new_filename = f"BountySeekers-{file_type}-{version_a}-{version_b}.jar"
                 source_path = os.path.join(root, filename)
                 target_path = os.path.join(build_dir, new_filename)
                 shutil.copy2(source_path, target_path)
-                print(f"Copied and renamed: {source_path} -> {target_path}")
+                print(f"Copied and renamed: {source_path} -> {target_path}.jar")
 
     # Zip the renamed files in the 'releases' directory
     zip_filename = os.path.join(target_folder, 'releases', f'BountySeekers-v{auto_version}.zip')

@@ -43,13 +43,11 @@
             <groupId>com.mrkelpy</groupId>
             <artifactId>core</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.mrkelpy</groupId>
             <artifactId>core-nms</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
