@@ -94,7 +94,7 @@ public abstract class PagedGUI implements Listener {
         }
 
         // Checks if the click was performed on the GUI, so the button clicks can be processed.
-        if (instanceEvaluation && event.getRawSlot() > this.storageSlots && event.getRawSlot() <= this.inventory.getSize())
+        if (instanceEvaluation && event.getRawSlot() <= this.inventory.getSize())
             event.setCancelled(true);
         else return;
 
