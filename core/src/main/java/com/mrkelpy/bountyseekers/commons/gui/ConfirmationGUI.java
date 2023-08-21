@@ -80,13 +80,18 @@ public abstract class ConfirmationGUI implements Listener {
             event.setCancelled(true);
         else return;
 
+        // Prevents the player from shift clicking on the Confirm/Cancel buttons.
+        if (event.getSlot() == this.storageSlots + 1 || event.getSlot() == this.storageSlots + 9 && event.isShiftClick()) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (event.getSlot() == this.storageSlots + 1) this.onCancel((Player) event.getWhoClicked());
         if (event.getSlot() == this.storageSlots + 9) this.onConfirm((Player) event.getWhoClicked());
     }
 
     /**
      * Prevents an item from being dragged on, to prevent exploits.
-     *
      * @param event InventoryDragEvent
      */
     @EventHandler
@@ -99,7 +104,6 @@ public abstract class ConfirmationGUI implements Listener {
 
     /**
      * Unregisters all event listeners present in an instance of this GUI to save resources.
-     *
      * @param event InventoryCloseEvent
      */
     @EventHandler

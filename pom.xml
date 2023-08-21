@@ -26,7 +26,6 @@
         <module>Spigot_1.18.x</module>
         <module>Spigot_1.19.x</module>
         <module>Spigot_1.20.x</module>
-        <module>Tools/ReleaseAggregator</module>
     </modules>
 
     <properties>

@@ -10,7 +10,6 @@
         <module name="Spigot_1.17.x" />
         <module name="Spigot_1.18.x" />
         <module name="Spigot_1.15.x" />
-        <module name="ReleaseAggregator" />
         <module name="Spigot_1.16.x" />
         <module name="Spigot_1.13.x" />
         <module name="Spigot_1.14.x" />
@@ -27,6 +26,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ReleaseAggregator" target="16" />
       <module name="Spigot_1.19.x (1)" target="1.8" />
       <module name="Spigot_1.19.x (2)" target="1.8" />
     </bytecodeTargetLevel>
