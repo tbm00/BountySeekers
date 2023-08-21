@@ -53,8 +53,6 @@ public class InternalConfigs {
 
         if (!this.getConfig().contains("reward-filter"))
             this.getConfig().set("reward-filter", null);
-
-        this.save();
     }
 
 }

@@ -4,6 +4,7 @@ import com.mrkelpy.bountyseekers.commons.carriers.Benefactor;
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
 import com.mrkelpy.bountyseekers.commons.carriers.SimplePlayer;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
+import com.mrkelpy.bountyseekers.commons.configuration.MessagesConfigHandler;
 import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
@@ -100,7 +101,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
 
         // Sends the "items returned" warning message in case there are still items left inside the GUI to be returned to the player.
         if (Arrays.stream(this.inventory.getContents()).filter(Objects::nonNull).count() > 2)
-            player.sendMessage(ChatUtils.sendMessage(null, "Sorry! You can't submit those rewards right now."));
+            player.sendMessage(ChatUtils.sendMessage(null, MessagesConfigHandler.INSTANCE.getValueFormatted("bounty.raise.denied", null, null)));
 
         // Returns any leftover items to the player.
         for (int i = 0; this.storageSlots + 1 > i; i++) {
@@ -111,12 +112,12 @@ public class BountyRaiseGUI extends ConfirmationGUI {
         }
         this.bounty.save();
 
-        // Announces the bounty raise, incase it was raised, hiding the benefactor if they're anonymous.
+        // Announces the bounty raise, in case it was raised, hiding the benefactor if they're anonymous.
         if (this.benefactor.toString() != null && this.bounty.getAdditionCount() > 0)
-            Bukkit.broadcastMessage(ChatUtils.sendMessage(null, this.benefactor.getPlayer().getName() + " has raised " + this.bounty.getTarget() + "'s bounty!"));
+            Bukkit.broadcastMessage(ChatUtils.sendMessage(null, MessagesConfigHandler.INSTANCE.getValueFormatted("bounty.raise.loud", this.benefactor.getPlayer().getName(), this.bounty.getTarget())));
 
         else if (this.benefactor.toString() == null && this.bounty.getAdditionCount() > 0)
-            Bukkit.broadcastMessage(ChatUtils.sendMessage(null, "A player has raised " + this.bounty.getTarget() + "'s bounty!"));
+            Bukkit.broadcastMessage(ChatUtils.sendMessage(null,  MessagesConfigHandler.INSTANCE.getValueFormatted("bounty.raise.silent", null, this.bounty.getTarget())));
 
         // Unregisters the event handlers and closes the inventory so no items are returned.
         HandlerList.unregisterAll(this);

@@ -1,6 +1,8 @@
 package com.mrkelpy.bountyseekers.v1_7;
 
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
+import com.mrkelpy.bountyseekers.commons.configuration.MessagesConfigHandler;
 import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.events.PlayerJoinListener;
 import com.mrkelpy.bountyseekers.commons.events.PlayerKillListener;
@@ -31,11 +33,20 @@ public class BountySeekers extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerKillListener(BountySeekers.compatibility), this);
 
         PluginConstants.LOGGER.info(String.format("Enabled %s v%s", PluginConstants.PLUGIN_NAME, this.getDescription().getVersion()));
+        loadConfigs();
     }
 
     @Override
     public void onDisable() {
         PluginConstants.LOGGER.info(String.format("Disabled %s v%s", PluginConstants.PLUGIN_NAME, this.getDescription().getVersion()));
+    }
+
+    /**
+     * Loads all the configs and caches.
+     */
+    public static void loadConfigs() {
+        InternalConfigs.INSTANCE.save();
+        MessagesConfigHandler.INSTANCE.save();
     }
 
 }

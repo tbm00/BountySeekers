@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.v1_19;
+package com.mrkelpy.bountyseekers.v1_20;
 
 import com.mrkelpy.bountyseekers.commons.carriers.Benefactor;
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
@@ -10,8 +10,8 @@ import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
 import com.mrkelpy.bountyseekers.commons.gui.BountyRaiseGUI;
 import com.mrkelpy.bountyseekers.commons.gui.RewardFilterGUI;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
-import com.mrkelpy.bountyseekers.v1_19.gui.BountyDisplayGUI;
-import com.mrkelpy.bountyseekers.v1_19.gui.BountyListDisplayGUI;
+import com.mrkelpy.bountyseekers.v1_20.gui.BountyDisplayGUI;
+import com.mrkelpy.bountyseekers.v1_20.gui.BountyListDisplayGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;

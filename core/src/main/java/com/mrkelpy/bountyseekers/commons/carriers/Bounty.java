@@ -103,7 +103,7 @@ public class Bounty {
 
         for (ItemStack reward : this.rewards) {
 
-            if (Arrays.stream(ItemStackUtils.getStorageContents(hunter)).allMatch(Objects::nonNull))
+            if (Arrays.stream(ItemStackUtils.getStorageContents(hunter)).noneMatch(Objects::nonNull))
                 hunter.getInventory().addItem(reward);
 
                 // If the inventory is full, start dropping the rewards on the ground.

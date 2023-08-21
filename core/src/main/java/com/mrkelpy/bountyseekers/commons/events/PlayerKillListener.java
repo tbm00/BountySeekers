@@ -2,6 +2,7 @@ package com.mrkelpy.bountyseekers.commons.events;
 
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.MessagesConfigHandler;
 import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import org.bukkit.Bukkit;
@@ -41,7 +42,8 @@ public class PlayerKillListener implements Listener {
         Bounty bounty = new Bounty(event.getEntity().getUniqueId(), this.compatibility);
         if (bounty.getRewards().isEmpty()) return;
 
-        Bukkit.broadcastMessage(ChatUtils.sendMessage(null, killer.getName() + " has claimed " + bounty.getTarget() + "'s bounty!"));
+        String killedMessage =  MessagesConfigHandler.INSTANCE.getValueFormatted("bounty.claim.message", killer.getName(), bounty.getTarget());
+        Bukkit.broadcastMessage(ChatUtils.sendMessage(null, killedMessage));
         bounty.claimBounty(killer);
     }
 

@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.v1_19.gui;
+package com.mrkelpy.bountyseekers.v1_20.gui;
 
 import com.mrkelpy.bountyseekers.commons.gui.PagedGUI;
 import org.bukkit.entity.Player;
