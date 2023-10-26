@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -92,6 +93,9 @@ public abstract class PagedGUI implements Listener {
         if (instanceEvaluation && Collections.frequency(Arrays.asList(this.inventory.getContents()), null) == 7 && event.isShiftClick() && event.getRawSlot() >= this.inventory.getSize()) {
             event.setCancelled(true);
         }
+
+        // No double-clicking allowed!
+        if (instanceEvaluation && event.getClick() == ClickType.DOUBLE_CLICK) event.setCancelled(true);
 
         // Checks if the click was performed on the GUI, so the button clicks can be processed.
         if (instanceEvaluation && event.getRawSlot() <= this.inventory.getSize())
