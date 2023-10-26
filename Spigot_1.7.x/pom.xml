@@ -37,7 +37,7 @@
             <groupId>com.github.azbh111</groupId>
             <artifactId>craftbukkit-1.7.10</artifactId>
             <version>R</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mrkelpy</groupId>
