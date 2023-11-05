@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -87,15 +88,27 @@ public abstract class PagedGUI implements Listener {
 
         // Checks if the inventory being used is the one that this class is using.
         boolean instanceEvaluation = event.getInventory().equals(this.inventory) && event.getWhoClicked().getUniqueId().equals(this.userUUID);
+        if (!instanceEvaluation) return;
 
         // Checks if a shift click was performed on the player inventory whilst the GUI is already full, thus sending the item to the unused 7 slots between the buttons.
-        if (instanceEvaluation && Collections.frequency(Arrays.asList(this.inventory.getContents()), null) == 7 && event.isShiftClick() && event.getRawSlot() >= this.inventory.getSize()) {
+        if (Collections.frequency(Arrays.asList(this.inventory.getContents()), null) == 7 && event.isShiftClick() && event.getRawSlot() >= this.inventory.getSize()) {
             event.setCancelled(true);
         }
 
+        // No double-clicking allowed!
+        if (event.getClick() == ClickType.DOUBLE_CLICK) event.setCancelled(true);
+
         // Checks if the click was performed on the GUI, so the button clicks can be processed.
-        if (instanceEvaluation && event.getRawSlot() <= this.inventory.getSize())
+        if (event.getRawSlot() <= this.inventory.getSize()) {
             event.setCancelled(true);
+        }
+
+        // Checks if the click was a shift click on the player inventory, cancelling it.
+        else if (event.getRawSlot() > this.inventory.getSize() && event.isShiftClick()) {
+            event.setCancelled(true);
+            return;
+        }
+
         else return;
 
         if (event.isShiftClick()) event.setCancelled(true);

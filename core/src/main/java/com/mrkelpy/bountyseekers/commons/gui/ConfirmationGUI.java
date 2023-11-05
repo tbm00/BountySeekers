@@ -17,6 +17,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -69,19 +70,21 @@ public abstract class ConfirmationGUI implements Listener {
 
         // Checks if the inventory being used is the one that this class is using.
         boolean instanceEvaluation = event.getInventory().equals(this.inventory) && event.getWhoClicked().getUniqueId().equals(this.userUUID);
+        if (!instanceEvaluation) return;
 
         // Checks if a shift click was performed on the player inventory whilst the GUI is already full, thus sending the item to the unused 7 slots between the buttons.
-        if (instanceEvaluation && Collections.frequency(Arrays.asList(this.inventory.getContents()), null) == 7 && event.isShiftClick() && event.getRawSlot() > this.inventory.getSize()) {
+        if (Collections.frequency(Arrays.asList(this.inventory.getContents()), null) == 7 && event.isShiftClick() && event.getRawSlot() > this.inventory.getSize()) {
             event.setCancelled(true);
         }
 
-        // Checks if the click was performed on the GUI, so the button clicks can be processed.
-        if (instanceEvaluation && event.getRawSlot() < this.inventory.getSize())
-            event.setCancelled(true);
-        else return;
-
         // Prevents the player from shift clicking on the Confirm/Cancel buttons.
-        if (event.getSlot() == this.storageSlots + 1 || event.getSlot() == this.storageSlots + 9 && event.isShiftClick()) {
+        if ((event.getSlot() == this.storageSlots + 1 || event.getSlot() == this.storageSlots + 9) && event.isShiftClick()) {
+            event.setCancelled(true);
+            return;
+        }
+
+        // Checks if a click was performed in the 7 unused slots between the buttons.
+        if (event.getRawSlot() > this.storageSlots + 1 && event.getRawSlot() < this.storageSlots + 9) {
             event.setCancelled(true);
             return;
         }
@@ -108,6 +111,7 @@ public abstract class ConfirmationGUI implements Listener {
      */
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
+
         if (event.getInventory().equals(this.inventory) && event.getPlayer().getUniqueId().equals(this.userUUID))
             HandlerList.unregisterAll(this);
     }
@@ -135,8 +139,7 @@ public abstract class ConfirmationGUI implements Listener {
      */
     private void registerListeners() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME);
-        assert plugin != null;
-        Bukkit.getPluginManager().registerEvents(this, plugin);
+        Bukkit.getPluginManager().registerEvents(this, Objects.requireNonNull(plugin));
     }
 
 }
