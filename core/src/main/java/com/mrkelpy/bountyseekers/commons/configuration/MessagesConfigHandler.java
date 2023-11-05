@@ -64,6 +64,6 @@ public class MessagesConfigHandler {
             this.config.set("bounty.raise.silent", "A player has raised %t's bounty!");
 
         if (!this.config.contains("bounty.raise.denied"))
-            this.config.set("bounty.raise.denied", "Sorry! You can't submit those rewards right now.");
+            this.config.set("bounty.raise.denied", "Some items were returned to you because they are not allowed as bounties!");
     }
 }
