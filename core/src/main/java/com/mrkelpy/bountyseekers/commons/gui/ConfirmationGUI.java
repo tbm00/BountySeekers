@@ -72,13 +72,16 @@ public abstract class ConfirmationGUI implements Listener {
         boolean instanceEvaluation = event.getInventory().equals(this.inventory) && event.getWhoClicked().getUniqueId().equals(this.userUUID);
         if (!instanceEvaluation) return;
 
+        // Gets the player who clicked the inventory.
+        Player player = (Player) event.getWhoClicked();
+
         // Checks if a shift click was performed on the player inventory whilst the GUI is already full, thus sending the item to the unused 7 slots between the buttons.
         if (Collections.frequency(Arrays.asList(this.inventory.getContents()), null) == 7 && event.isShiftClick() && event.getRawSlot() > this.inventory.getSize()) {
             event.setCancelled(true);
         }
 
         // Prevents the player from shift clicking on the Confirm/Cancel buttons.
-        if ((event.getSlot() == this.storageSlots + 1 || event.getSlot() == this.storageSlots + 9) && event.isShiftClick()) {
+        if (this.isButtonSlot(event.getRawSlot()) && event.isShiftClick()) {
             event.setCancelled(true);
             return;
         }
@@ -89,8 +92,23 @@ public abstract class ConfirmationGUI implements Listener {
             return;
         }
 
-        if (event.getSlot() == this.storageSlots + 1) this.onCancel((Player) event.getWhoClicked());
-        if (event.getSlot() == this.storageSlots + 9) this.onConfirm((Player) event.getWhoClicked());
+        // Prevents the player from clicking on the Confirm/Cancel buttons with an item on their cursor.
+        if (this.isButtonSlot(event.getRawSlot()) && player.getItemOnCursor().getType() != Material.AIR) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (event.getSlot() == this.storageSlots + 1) this.onCancel(player);
+        if (event.getSlot() == this.storageSlots + 9) this.onConfirm(player);
+    }
+
+    /**
+     * Checks if the slot clicked was any of the paging button ones.
+     * @param slot The slot clicked.
+     * @return True if the slot clicked was any of the paging button ones, false otherwise.
+     */
+    private boolean isButtonSlot(int slot) {
+        return slot == this.storageSlots + 1 || slot == this.storageSlots + 9;
     }
 
     /**
