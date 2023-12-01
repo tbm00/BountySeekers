@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -92,14 +93,20 @@ public abstract class ConfirmationGUI implements Listener {
             return;
         }
 
-        // Prevents the player from clicking on the Confirm/Cancel buttons with an item on their cursor.
+        // Prevents the player from clicking on the Confirm/Cancel buttons with an item on their cursor
         if (this.isButtonSlot(event.getRawSlot()) && player.getItemOnCursor().getType() != Material.AIR) {
             event.setCancelled(true);
             return;
         }
 
-        if (event.getSlot() == this.storageSlots + 1) this.onCancel(player);
-        if (event.getSlot() == this.storageSlots + 9) this.onConfirm(player);
+        // Prevents any SHIFT_LEFT clicks on reserved storage slots. This avoids accidental cancel clicks.
+        if (event.getRawSlot() >= this.storageSlots && event.getRawSlot() <= this.storageSlots + 9 && event.getClick() == ClickType.SHIFT_LEFT) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (event.getRawSlot() == this.storageSlots + 1) this.onCancel(player);
+        if (event.getRawSlot() == this.storageSlots + 9) this.onConfirm(player);
     }
 
     /**
