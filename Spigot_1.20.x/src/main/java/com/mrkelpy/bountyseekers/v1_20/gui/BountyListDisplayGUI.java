@@ -1,5 +1,6 @@
 package com.mrkelpy.bountyseekers.v1_20.gui;
 
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
 import com.mrkelpy.bountyseekers.commons.gui.PagedGUI;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
@@ -36,7 +37,7 @@ public class BountyListDisplayGUI extends PagedGUI {
      * Main constructor for the BountyListDisplayGUI.
      */
     public BountyListDisplayGUI(Player player) {
-        super("Active Bounties", 27, player.getUniqueId());
+        super(ConfigurableTextHandler.INSTANCE.getValue("bounty.actives.title"), 27, player.getUniqueId());
         this.player = player;
         this.setItems(this.makeBountyItemList());
         this.reload();

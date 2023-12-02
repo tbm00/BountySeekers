@@ -1,5 +1,6 @@
 package com.mrkelpy.bountyseekers.v1_15.gui;
 
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.gui.PagedGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +23,7 @@ public class BountyDisplayGUI extends PagedGUI {
      * @param items The bounty rewards to display.
      */
     public BountyDisplayGUI(Player player, ItemStack[] items) {
-        super("Bounty Rewards", 27, Arrays.asList(items), player.getUniqueId());
+        super(ConfigurableTextHandler.INSTANCE.getValue("bounty.actives.title"), 27, Arrays.asList(items), player.getUniqueId());
         this.player = player;
     }
 

@@ -135,7 +135,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
 
         // Unregisters the event handlers so there's no recursion
         HandlerList.unregisterAll(this);
-        boolean isKeepInventoryFalse = Boolean.FALSE.equals(player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY));
+        boolean isKeepInventoryFalse = player.getWorld().getGameRuleValue("keepInventory").equals("false");
 
         // Drops all the items inside the GUI at the player's location if they die with the GUI open, or they're not online.
         if ((player.getHealth() == 0 && isKeepInventoryFalse) || Bukkit.getServer().getPlayerExact(player.getName()) == null) {
@@ -154,6 +154,8 @@ public class BountyRaiseGUI extends ConfirmationGUI {
 
         if (this.benefactor.getPlayer().getOpenInventory().getType() == InventoryType.CHEST)
             this.benefactor.getPlayer().closeInventory();
+
+        player.updateInventory();
     }
 
     /**

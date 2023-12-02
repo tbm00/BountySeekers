@@ -81,6 +81,12 @@ public class ConfigurableTextHandler {
         if (!this.config.contains("bounty.reward.filter.title"))
             this.config.set("bounty.reward.filter.title", "Reward Filters");
 
+        if (!this.config.contains("bounty.actives.title"))
+            this.config.set("bounty.actives.title", "Active Bounties");
+
+        if (!this.config.contains("bounty.display.title"))
+            this.config.set("bounty.display.title", "Bounty Rewards");
+
 
     }
 }
