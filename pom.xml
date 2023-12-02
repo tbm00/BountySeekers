@@ -6,7 +6,8 @@
 
     <groupId>com.mrkelpy</groupId>
     <artifactId>BountySeekers</artifactId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
+
     <packaging>pom</packaging>
     <modules>
         <module>core</module>

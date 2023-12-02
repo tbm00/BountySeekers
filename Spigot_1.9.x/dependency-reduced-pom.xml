@@ -3,7 +3,8 @@
   <parent>
     <artifactId>BountySeekers</artifactId>
     <groupId>com.mrkelpy</groupId>
-    <version>1.2.7</version>
+    <version>1.2.8</version>
+
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>Spigot_1.9.x</artifactId>

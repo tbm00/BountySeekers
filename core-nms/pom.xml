@@ -6,7 +6,8 @@
     <parent>
         <groupId>com.mrkelpy</groupId>
         <artifactId>BountySeekers</artifactId>
-        <version>1.2.7</version>
+        <version>1.2.8</version>
+
     </parent>
 
     <artifactId>core-nms</artifactId>
