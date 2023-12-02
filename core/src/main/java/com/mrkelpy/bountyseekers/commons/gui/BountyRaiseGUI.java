@@ -4,7 +4,7 @@ import com.mrkelpy.bountyseekers.commons.carriers.Benefactor;
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
 import com.mrkelpy.bountyseekers.commons.carriers.SimplePlayer;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
-import com.mrkelpy.bountyseekers.commons.configuration.MessagesConfigHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
@@ -21,6 +21,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,7 +102,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
 
         // Sends the "items returned" warning message in case there are still items left inside the GUI to be returned to the player.
         if (Arrays.stream(this.inventory.getContents()).filter(Objects::nonNull).count() > 2)
-            player.sendMessage(ChatUtils.sendMessage(null, MessagesConfigHandler.INSTANCE.getValueFormatted("bounty.raise.denied", null, null)));
+            player.sendMessage(ChatUtils.sendMessage(null, ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.denied", null, null)));
 
         // Returns any leftover items to the player.
         for (int i = 0; this.storageSlots + 1 > i; i++) {
@@ -114,10 +115,10 @@ public class BountyRaiseGUI extends ConfirmationGUI {
 
         // Announces the bounty raise, in case it was raised, hiding the benefactor if they're anonymous.
         if (this.benefactor.toString() != null && this.bounty.getAdditionCount() > 0)
-            Bukkit.broadcastMessage(ChatUtils.sendMessage(null, MessagesConfigHandler.INSTANCE.getValueFormatted("bounty.raise.loud", this.benefactor.getPlayer().getName(), this.bounty.getTarget())));
+            Bukkit.broadcastMessage(ChatUtils.sendMessage(null, ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.loud", this.benefactor.getPlayer().getName(), this.bounty.getTarget())));
 
         else if (this.benefactor.toString() == null && this.bounty.getAdditionCount() > 0)
-            Bukkit.broadcastMessage(ChatUtils.sendMessage(null,  MessagesConfigHandler.INSTANCE.getValueFormatted("bounty.raise.silent", null, this.bounty.getTarget())));
+            Bukkit.broadcastMessage(ChatUtils.sendMessage(null,  ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.silent", null, this.bounty.getTarget())));
 
         // Unregisters the event handlers and closes the inventory so no items are returned.
         HandlerList.unregisterAll(this);
@@ -134,14 +135,16 @@ public class BountyRaiseGUI extends ConfirmationGUI {
 
         // Unregisters the event handlers so there's no recursion
         HandlerList.unregisterAll(this);
+        boolean isKeepInventoryFalse = Boolean.FALSE.equals(player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY));
 
-        // Drops all the items inside the GUI at the player's location if they die with the GUI open
-        if (player.getHealth() == 0 && Boolean.FALSE.equals(player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY))) {
-            for (int i = 0; this.storageSlots + 1 >= i; i++) {
+        // Drops all the items inside the GUI at the player's location if they die with the GUI open, or they're not online.
+        if ((player.getHealth() == 0 && isKeepInventoryFalse) || Bukkit.getServer().getPlayerExact(player.getName()) == null) {
+
+            for (int i = 0; i <= this.storageSlots; i++) {
                 ItemStack item = this.inventory.getItem(i);
 
                 if (item != null && item.getType() != Material.AIR)
-                    player.getWorld().dropItemNaturally(player.getLocation(), item);
+                     this.scheduleItemDrop(player, item, 1L);
             }
             return;
         }
@@ -163,9 +166,9 @@ public class BountyRaiseGUI extends ConfirmationGUI {
     public void onInventoryClose(InventoryCloseEvent event) {
 
         if (event.getInventory().equals(this.inventory) && this.userUUID.equals(event.getPlayer().getUniqueId()))
+            this.scheduleRunnable(() -> this.onCancel((Player) event.getPlayer()), 1L);
 
-            Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME),
-                    () -> this.onCancel((Player) event.getPlayer()), 3L);
+        super.onInventoryClose(event);
     }
 
     /**
@@ -188,11 +191,33 @@ public class BountyRaiseGUI extends ConfirmationGUI {
     public void onItemDrop(PlayerDropItemEvent event) {
 
         if (event.getPlayer().getUniqueId() == this.benefactor.getPlayer().getUniqueId()) {
-            event.setCancelled(true);
 
-            Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME),
-                    () -> event.getPlayer().updateInventory(), 1L);
+            event.setCancelled(true);
+            this.scheduleRunnable(() -> event.getPlayer().updateInventory(), 1L);
         }
+    }
+
+    /**
+     * Schedules a task to drop an item into the world at the coordinates of a player.
+     * @param player The player to get the world and coordinates from
+     * @param item The item stack to drop
+     * @param delay The delay
+     */
+    private void scheduleItemDrop(Player player, ItemStack item, long delay) {
+
+        // Creates the lambda instance that will execute the dropping action and schedules it.
+        Runnable dropper = () -> player.getWorld().dropItemNaturally(player.getLocation(), item);
+        this.scheduleRunnable(dropper, delay);
+    }
+
+    /**
+     * Schedules a task to run a runnable after a delay.
+     * @param runnable The runnable to run
+     * @param delay The delay
+     */
+    private void scheduleRunnable(Runnable runnable, long delay) {
+        Plugin plugin = Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME));
+        Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
     }
 
 }

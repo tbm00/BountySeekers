@@ -8,9 +8,9 @@ import java.io.File;
 /**
  * This class implements a configuration for the messages displayed throughout the plugin.
  */
-public class MessagesConfigHandler {
+public class ConfigurableTextHandler {
 
-    public static final MessagesConfigHandler INSTANCE = new MessagesConfigHandler();
+    public static final ConfigurableTextHandler INSTANCE = new ConfigurableTextHandler();
     private final File configFile = new File(FileUtils.makeDirectory("data"), "messages.yml");
     private final YamlConfiguration config = YamlConfiguration.loadConfiguration(this.configFile);
 
@@ -18,7 +18,7 @@ public class MessagesConfigHandler {
      * Main constructor for the MessagesConfigHandler class.
      * Adds the default values to the config and saves it.
      */
-    public MessagesConfigHandler() {
+    public ConfigurableTextHandler() {
         this.addDefaults();
         this.save();
     }
@@ -65,5 +65,10 @@ public class MessagesConfigHandler {
 
         if (!this.config.contains("bounty.raise.denied"))
             this.config.set("bounty.raise.denied", "Some items were returned to you because they are not allowed as bounties!");
+
+        if (!this.config.contains("bounty.raise.title"))
+            this.config.set("bounty.raise.title", "Raise %t's bounty");
+
+
     }
 }
