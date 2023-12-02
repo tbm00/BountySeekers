@@ -99,8 +99,8 @@ public abstract class ConfirmationGUI implements Listener {
             return;
         }
 
-        // Prevents any SHIFT_LEFT clicks on reserved storage slots. This avoids accidental cancel clicks.
-        if (event.getRawSlot() >= this.storageSlots && event.getRawSlot() <= this.storageSlots + 9 && event.getClick() == ClickType.SHIFT_LEFT) {
+        // Prevents any SHIFT_LEFT clicks on the button reserved slot row. This avoids accidental cancel clicks.
+        if ((event.getRawSlot() > this.storageSlots && event.getRawSlot() <= this.storageSlots + 9)  && event.getClick() == ClickType.SHIFT_LEFT) {
             event.setCancelled(true);
             return;
         }
