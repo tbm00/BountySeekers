@@ -39,6 +39,15 @@ public class ConfigurableTextHandler {
     }
 
     /**
+     * Gets a value from the config.
+     * @param configName The name of the config to get the value from
+     * @return The value of the config
+     */
+    public String getValue(String configName) {
+        return this.config.getString(configName, "");
+    }
+
+    /**
      * Saves the config into memory.
      */
     public void save() {
@@ -68,6 +77,9 @@ public class ConfigurableTextHandler {
 
         if (!this.config.contains("bounty.raise.title"))
             this.config.set("bounty.raise.title", "Raise %t's bounty");
+
+        if (!this.config.contains("bounty.reward.filter.title"))
+            this.config.set("bounty.reward.filter.title", "Reward Filters");
 
 
     }

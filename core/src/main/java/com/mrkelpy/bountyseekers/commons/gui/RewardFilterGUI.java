@@ -1,5 +1,6 @@
 package com.mrkelpy.bountyseekers.commons.gui;
 
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.*;
@@ -35,7 +36,7 @@ public class RewardFilterGUI extends ConfirmationGUI {
      * @param compatibility The compatibility mode of the current version
      */
     public RewardFilterGUI(CompatibilityMode compatibility, Player user) {
-        super("Reward Filters", 9*5, user.getUniqueId());
+        super(ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.title", null, null), 9*5, user.getUniqueId());
         this.user = user;
         this.serializer = new SerializationUtils(compatibility);
         this.inventoryBackup = this.serializer.itemStackArrayToBase64(user.getInventory().getContents());
