@@ -1,15 +1,14 @@
 package com.mrkelpy.bountyseekers.commons.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ItemStackUtils {
 
@@ -115,8 +114,9 @@ public class ItemStackUtils {
         ItemStack[] contents = player.getInventory().getContents();
         List<ItemStack> storageContents = new ArrayList<>();
 
-        for (int i = 0; i < contents.length; i++)
+        for (int i = 0; i < contents.length; i++) {
             if (i < InventoryType.CHEST.getDefaultSize() + 9) storageContents.add(contents[i]);
+        }
 
         return storageContents.toArray(new ItemStack[0]);
     }
@@ -145,6 +145,29 @@ public class ItemStackUtils {
         ItemStack pivot = item.clone();
         pivot.setAmount(1);
         return pivot;
+    }
+
+    /**
+     * Schedules a task to drop an item into the world at the coordinates of a player.
+     * @param player The player to get the world and coordinates from
+     * @param item The item stack to drop
+     * @param delay The delay
+     */
+    public static void scheduleItemDrop(Player player, ItemStack item, long delay) {
+
+        // Creates the lambda instance that will execute the dropping action and schedules it.
+        Runnable dropper = () -> player.getWorld().dropItemNaturally(player.getLocation(), item);
+        ItemStackUtils.scheduleRunnable(dropper, delay);
+    }
+
+    /**
+     * Schedules a task to run a runnable after a delay.
+     * @param runnable The runnable to run
+     * @param delay The delay
+     */
+    public static void scheduleRunnable(Runnable runnable, long delay) {
+        Plugin plugin = Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME));
+        Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
     }
 }
 

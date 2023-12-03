@@ -1,5 +1,6 @@
 package com.mrkelpy.bountyseekers.commons.gui;
 
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.utils.GUIUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
 import org.bukkit.Bukkit;
@@ -208,6 +209,10 @@ public abstract class PagedGUI implements Listener {
      */
     private void setPagingButtons() {
 
+        String previousPageButtonName = ConfigurableTextHandler.INSTANCE.getValue("button.previous");
+        String nextPageButtonName = ConfigurableTextHandler.INSTANCE.getValue("button.next");
+        String goBackButtonName = ConfigurableTextHandler.INSTANCE.getValue("button.back");
+
         ItemStack limeDye = Material.getMaterial("LIME_DYE") != null ?
                 GUIUtils.createItemPlaceholder(Material.getMaterial("LIME_DYE"), "tmp") :
                 GUIUtils.createItemPlaceholder(Material.getMaterial("INK_SACK"), "tmp", null, (short) 10);
@@ -217,12 +222,12 @@ public abstract class PagedGUI implements Listener {
                 GUIUtils.createItemPlaceholder(Material.getMaterial("INK_SACK"), "tmp", null, (short) 8);
 
         ItemStack orangeDye = Material.getMaterial("ORANGE_DYE") != null ?
-                GUIUtils.createItemPlaceholder(Material.getMaterial("ORANGE_DYE"), "§bGo Back") :
-                GUIUtils.createItemPlaceholder(Material.getMaterial("INK_SACK"), "§bGo Back", null, (short) 14);
+                GUIUtils.createItemPlaceholder(Material.getMaterial("ORANGE_DYE"), goBackButtonName) :
+                GUIUtils.createItemPlaceholder(Material.getMaterial("INK_SACK"), goBackButtonName, null, (short) 14);
 
-        this.inventory.setItem(this.storageSlots + 1, this.hasPreviousPage() ? ItemStackUtils.getRenamed(limeDye, "§bPrevious Page") : ItemStackUtils.getRenamed(grayDye, "§bPrevious Page"));
+        this.inventory.setItem(this.storageSlots + 1, this.hasPreviousPage() ? ItemStackUtils.getRenamed(limeDye, previousPageButtonName) : ItemStackUtils.getRenamed(grayDye, previousPageButtonName));
         this.inventory.setItem(this.storageSlots + 5, orangeDye);
-        this.inventory.setItem(this.storageSlots + 9, this.hasNextPage() ? ItemStackUtils.getRenamed(limeDye, "§bNext Page") : ItemStackUtils.getRenamed(grayDye, "§bNext Page"));
+        this.inventory.setItem(this.storageSlots + 9, this.hasNextPage() ? ItemStackUtils.getRenamed(limeDye, nextPageButtonName) : ItemStackUtils.getRenamed(grayDye, nextPageButtonName));
     }
 
     /**

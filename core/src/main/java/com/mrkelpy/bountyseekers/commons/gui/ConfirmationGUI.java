@@ -1,5 +1,6 @@
 package com.mrkelpy.bountyseekers.commons.gui;
 
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.utils.GUIUtils;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.Bukkit;
@@ -146,16 +147,18 @@ public abstract class ConfirmationGUI implements Listener {
      */
     private void addConfirmationButtons() {
 
+        String confirmButtonName = ConfigurableTextHandler.INSTANCE.getValue("button.confirm");
+        String cancelButtonName = ConfigurableTextHandler.INSTANCE.getValue("button.cancel");
+
         ItemStack redWool = Material.getMaterial("RED_WOOL") != null ?
-                GUIUtils.createItemPlaceholder(Material.getMaterial("RED_WOOL"), "§cCancel") :
-                GUIUtils.createItemPlaceholder(Material.getMaterial("WOOL"), "§cCancel", null, (short) 14);
+                GUIUtils.createItemPlaceholder(Material.getMaterial("RED_WOOL"), cancelButtonName) :
+                GUIUtils.createItemPlaceholder(Material.getMaterial("WOOL"), cancelButtonName, null, (short) 14);
 
         ItemStack limeWool = Material.getMaterial("LIME_WOOL") != null ?
-                GUIUtils.createItemPlaceholder(Material.getMaterial("LIME_WOOL"), "§eConfirm") :
-                GUIUtils.createItemPlaceholder(Material.getMaterial("WOOL"), "§eConfirm", null, (short) 5);
+                GUIUtils.createItemPlaceholder(Material.getMaterial("LIME_WOOL"), confirmButtonName) :
+                GUIUtils.createItemPlaceholder(Material.getMaterial("WOOL"), confirmButtonName, null, (short) 5);
 
         this.inventory.setItem(this.storageSlots + 1, redWool);
-
         this.inventory.setItem(this.storageSlots + 9, limeWool);
     }
 

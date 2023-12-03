@@ -1,5 +1,6 @@
 package com.mrkelpy.bountyseekers.commons.commands;
 
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
@@ -37,7 +38,7 @@ public interface ICommandImplementations {
             return true;
 
         if (args.length != 1) {
-            commandSender.sendMessage("§cUsage:" + CommandRegistry.SET_REWARD_LIMIT.getUsage());
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.usage") + CommandRegistry.SET_REWARD_LIMIT.getUsage());
             return true;
         }
 

@@ -93,8 +93,10 @@ public class BountyListDisplayGUI extends PagedGUI {
             UUID playerUUID = UUID.fromString(bountyFile.getName().replace(".bounty", ""));
 
             String playername = UUIDCache.INSTANCE.getName(playerUUID);
+            String bountyViewText = ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.display.view", null, playername);
+
             ItemStack item = GUIUtils.getPlayerHeadPlaceholder(
-                    playerUUID, "§e" + playername, Collections.singletonList("§7Click here to view this bounty"));
+                    playerUUID, "§e" + playername, Collections.singletonList(bountyViewText));
 
             // Adds the item with the custom tag to the list, as a bukkit copy.
             bountyItemList.add(item);

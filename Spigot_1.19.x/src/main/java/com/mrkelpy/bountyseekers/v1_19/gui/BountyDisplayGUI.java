@@ -23,7 +23,7 @@ public class BountyDisplayGUI extends PagedGUI {
      * @param items The bounty rewards to display.
      */
     public BountyDisplayGUI(Player player, ItemStack[] items) {
-        super(ConfigurableTextHandler.INSTANCE.getValue("bounty.actives.title"), 27, Arrays.asList(items), player.getUniqueId());
+        super(ConfigurableTextHandler.INSTANCE.getValue("bounty.display.title"), 27, Arrays.asList(items), player.getUniqueId());
         this.player = player;
     }
 
