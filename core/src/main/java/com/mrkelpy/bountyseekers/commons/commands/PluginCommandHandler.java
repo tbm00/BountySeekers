@@ -94,6 +94,7 @@ public class PluginCommandHandler implements CommandExecutor {
             PluginConstants.LOGGER.warning("An internal error happened whilst running <" + command + "> with arguments [" + String.join(", ", args) + "]");
             PluginConstants.LOGGER.warning("Error: " + e.getCause().getMessage());
             return true;
+
         } catch (NoSuchMethodException | IllegalAccessException ignored) {
         }
 

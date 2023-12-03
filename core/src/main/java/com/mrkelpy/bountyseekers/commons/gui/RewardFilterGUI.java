@@ -14,7 +14,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +30,7 @@ public class RewardFilterGUI extends ConfirmationGUI {
 
     private final Player user;
     private final SerializationUtils serializer;
-    private final String inventoryBackup;
+    private final Inventory inventoryBackup;
 
     /**
      * Main constructor for the RewardFilterGUI class.
@@ -39,7 +41,9 @@ public class RewardFilterGUI extends ConfirmationGUI {
         super(ConfigurableTextHandler.INSTANCE.getValue("bounty.reward.filter.title"), 9*5, user.getUniqueId());
         this.user = user;
         this.serializer = new SerializationUtils(compatibility);
-        this.inventoryBackup = this.serializer.itemStackArrayToBase64(user.getInventory().getContents());
+
+        this.inventoryBackup = Bukkit.createInventory(null, InventoryType.CHEST.getDefaultSize() + 9);
+        this.inventoryBackup.setContents(ItemStackUtils.getStorageContents(this.user));
 
         ItemStack[] items = FileUtils.getRewardFilter(compatibility);
         if (items == null) return;
@@ -94,23 +98,26 @@ public class RewardFilterGUI extends ConfirmationGUI {
 
         // Unregisters the event handlers and closes the inventory so there's no recursion
         HandlerList.unregisterAll(this);
+        boolean isKeepInventoryFalse = player.getWorld().getGameRuleValue("keepInventory").equals("false");
 
         if (this.user.getOpenInventory().getType() == InventoryType.CHEST)
             this.user.closeInventory();
 
-        // Drops all the items inside the GUI at the player's location if they die with the GUI open
-        if (player.getHealth() == 0 && Boolean.FALSE.equals(player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY))) {
-            for (int i = 0; this.storageSlots + 1 >= i; i++) {
+        // Drops all the items inside the GUI at the player's location if they die with the GUI open, or they're not online.
+        if ((player.getHealth() == 0 && isKeepInventoryFalse) || Bukkit.getServer().getPlayerExact(player.getName()) == null) {
+
+            for (int i = 0; i <= this.storageSlots; i++) {
                 ItemStack item = this.inventory.getItem(i);
 
                 if (item != null && item.getType() != Material.AIR)
-                    player.getWorld().dropItemNaturally(player.getLocation(), item);
+                    ItemStackUtils.scheduleItemDrop(player, item, 1L);
             }
             return;
         }
 
         // If that doesn't happen, and there's a normal cancellation, return the items to the player.
-        this.user.getInventory().setContents(this.serializer.itemStackArrayFromBase64(this.inventoryBackup));
+        this.user.getInventory().setContents(this.inventoryBackup.getContents());
+        player.updateInventory();
     }
 
     /**
@@ -121,10 +128,9 @@ public class RewardFilterGUI extends ConfirmationGUI {
     public void onItemDrop(PlayerDropItemEvent event) {
 
         if (event.getPlayer().getUniqueId().equals(this.userUUID)) {
-            event.setCancelled(true);
 
-            Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME),
-                    () -> event.getPlayer().updateInventory(), 1L);
+            event.setCancelled(true);
+            ItemStackUtils.scheduleRunnable(() -> event.getPlayer().updateInventory(), 1L);
         }
     }
 
@@ -138,9 +144,7 @@ public class RewardFilterGUI extends ConfirmationGUI {
     public void onInventoryClose(InventoryCloseEvent event) {
 
         if (event.getInventory().equals(this.inventory) && this.userUUID.equals(event.getPlayer().getUniqueId()))
-
-            Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME),
-                    () -> this.onCancel((Player) event.getPlayer()), 3L);
+            ItemStackUtils.scheduleRunnable(() -> this.onCancel((Player) event.getPlayer()), 1L);
     }
 
     /**

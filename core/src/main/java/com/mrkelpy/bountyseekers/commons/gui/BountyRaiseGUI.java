@@ -5,6 +5,7 @@ import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
 import com.mrkelpy.bountyseekers.commons.carriers.SimplePlayer;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.PluginConfiguration;
 import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
@@ -12,6 +13,7 @@ import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -116,7 +118,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
         if (this.benefactor.toString() != null && this.bounty.getAdditionCount() > 0)
             Bukkit.broadcastMessage(ChatUtils.sendMessage(null, ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.loud", this.benefactor.getPlayer().getName(), this.bounty.getTarget())));
 
-        else if (this.benefactor.toString() == null && this.bounty.getAdditionCount() > 0)
+        else if (this.benefactor.toString() == null && this.bounty.getAdditionCount() > 0 && !PluginConfiguration.INSTANCE.getConfig().getBoolean("general.commands.truly-silent-raise"))
             Bukkit.broadcastMessage(ChatUtils.sendMessage(null,  ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.silent", null, this.bounty.getTarget())));
 
         // Unregisters the event handlers and closes the inventory so no items are returned.
@@ -143,7 +145,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
                 ItemStack item = this.inventory.getItem(i);
 
                 if (item != null && item.getType() != Material.AIR)
-                     this.scheduleItemDrop(player, item, 1L);
+                     ItemStackUtils.scheduleItemDrop(player, item, 1L);
             }
             return;
         }
@@ -167,7 +169,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
     public void onInventoryClose(InventoryCloseEvent event) {
 
         if (event.getInventory().equals(this.inventory) && this.userUUID.equals(event.getPlayer().getUniqueId()))
-            this.scheduleRunnable(() -> this.onCancel((Player) event.getPlayer()), 1L);
+            ItemStackUtils.scheduleRunnable(() -> this.onCancel((Player) event.getPlayer()), 1L);
 
         super.onInventoryClose(event);
     }
@@ -194,32 +196,8 @@ public class BountyRaiseGUI extends ConfirmationGUI {
         if (event.getPlayer().getUniqueId() == this.benefactor.getPlayer().getUniqueId()) {
 
             event.setCancelled(true);
-            this.scheduleRunnable(() -> event.getPlayer().updateInventory(), 1L);
+            ItemStackUtils.scheduleRunnable(() -> event.getPlayer().updateInventory(), 1L);
         }
     }
-
-    /**
-     * Schedules a task to drop an item into the world at the coordinates of a player.
-     * @param player The player to get the world and coordinates from
-     * @param item The item stack to drop
-     * @param delay The delay
-     */
-    private void scheduleItemDrop(Player player, ItemStack item, long delay) {
-
-        // Creates the lambda instance that will execute the dropping action and schedules it.
-        Runnable dropper = () -> player.getWorld().dropItemNaturally(player.getLocation(), item);
-        this.scheduleRunnable(dropper, delay);
-    }
-
-    /**
-     * Schedules a task to run a runnable after a delay.
-     * @param runnable The runnable to run
-     * @param delay The delay
-     */
-    private void scheduleRunnable(Runnable runnable, long delay) {
-        Plugin plugin = Objects.requireNonNull(Bukkit.getPluginManager().getPlugin(PluginConstants.PLUGIN_NAME));
-        Bukkit.getScheduler().runTaskLater(plugin, runnable, delay);
-    }
-
 }
 

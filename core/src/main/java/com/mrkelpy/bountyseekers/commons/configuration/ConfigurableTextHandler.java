@@ -11,7 +11,7 @@ import java.io.File;
 public class ConfigurableTextHandler {
 
     public static final ConfigurableTextHandler INSTANCE = new ConfigurableTextHandler();
-    private final File configFile = new File(FileUtils.makeDirectory("data"), "messages.yml");
+    private final File configFile = new File(FileUtils.makeDirectory("."), "messages.yml");
     private final YamlConfiguration config = YamlConfiguration.loadConfiguration(this.configFile);
 
     /**
@@ -105,8 +105,8 @@ public class ConfigurableTextHandler {
         if (!this.config.contains("command.nobounty"))
             this.config.set("command.nobounty", "§cCould not find an active bounty for that player.");
 
-        if (!this.config.contains("commands.ownbounty"))
-            this.config.set("commands.ownbounty", "You can't raise your own bounty!");
+        if (!this.config.contains("command.ownbounty"))
+            this.config.set("command.ownbounty", "You can't raise your own bounty!");
 
         if (!this.config.contains("button.confirm"))
             this.config.set("button.confirm", "§eConfirm");

@@ -126,7 +126,7 @@ public class CommandImplementations implements ICommandImplementations {
 
         // Prevents the target from raising their own bounty
         if (commandSender.getName().equalsIgnoreCase(args[0])) {
-            ChatUtils.sendMessage((Player) commandSender, ConfigurableTextHandler.INSTANCE.getValue("commands.ownbounty"));
+            ChatUtils.sendMessage((Player) commandSender, ConfigurableTextHandler.INSTANCE.getValue("command.ownbounty"));
             return true;
         }
 

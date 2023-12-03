@@ -9,6 +9,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 
 /**
@@ -48,6 +49,8 @@ public class SerializationUtils {
      * @return A sign-magnitude string of base32 string representing the ItemStack.
      */
     public String itemStackToMagBase32(ItemStack item) {
+
+        if (item == null) return null;
 
         // Opens a ByteArrayOutputStream and a DataOutputStream to write the data into.
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

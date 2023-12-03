@@ -3,6 +3,7 @@ package com.mrkelpy.bountyseekers.v1_7;
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.PluginConfiguration;
 import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.events.PlayerJoinListener;
 import com.mrkelpy.bountyseekers.commons.events.PlayerKillListener;
@@ -47,6 +48,7 @@ public class BountySeekers extends JavaPlugin {
     public static void loadConfigs() {
         InternalConfigs.INSTANCE.save();
         ConfigurableTextHandler.INSTANCE.save();
+        PluginConfiguration.INSTANCE.save();
     }
 
 }
