@@ -87,6 +87,41 @@ public class ConfigurableTextHandler {
         if (!this.config.contains("bounty.display.title"))
             this.config.set("bounty.display.title", "Bounty Rewards");
 
+        if (!this.config.contains("bounty.display.view"))
+            this.config.set("bounty.display.view", "Click here to view this bounty");
+
+        if (!this.config.contains("bounty.reset"))
+            this.config.set("bounty.reset", "%t's bounty has been reset!");
+
+        if (!this.config.contains("bounty.reset.user"))
+            this.config.set("bounty.reset.user", "Your bounty has been reset!");
+
+        if (!this.config.contains("command.usage"))
+            this.config.set("command.usage", "§cUsage");
+
+        if (!this.config.contains("command.playernotfound"))
+            this.config.set("command.playernotfound", "§cThat player cannot be found.");
+
+        if (!this.config.contains("command.nobounty"))
+            this.config.set("command.nobounty", "§cCould not find an active bounty for that player.");
+
+        if (!this.config.contains("commands.ownbounty"))
+            this.config.set("commands.ownbounty", "You can't raise your own bounty!");
+
+        if (!this.config.contains("button.confirm"))
+            this.config.set("button.confirm", "§eConfirm");
+
+        if (!this.config.contains("button.cancel"))
+            this.config.set("button.cancel", "§cCancel");
+
+        if (!this.config.contains("button.back"))
+            this.config.set("button.back", "§bGo Back");
+
+        if (!this.config.contains("button.next"))
+            this.config.set("button.next", "§bNext Page");
+
+        if (!this.config.contains("button.previous"))
+            this.config.set("button.previous", "§bPrevious Page");
 
     }
 }

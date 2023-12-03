@@ -5,6 +5,7 @@ import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
 import com.mrkelpy.bountyseekers.commons.carriers.SimplePlayer;
 import com.mrkelpy.bountyseekers.commons.commands.ICommandImplementations;
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
 import com.mrkelpy.bountyseekers.commons.gui.BountyRaiseGUI;
@@ -78,7 +79,7 @@ public class CommandImplementations implements ICommandImplementations {
         if (!(commandSender instanceof Player)) return false;
 
         if (args.length != 1) {
-            commandSender.sendMessage( "§cUsage: " + CommandRegistry.CHECK.getUsage());
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.usage") + CommandRegistry.CHECK.getUsage());
             return true;
         }
 
@@ -86,14 +87,14 @@ public class CommandImplementations implements ICommandImplementations {
         Player player = (Player) commandSender;
         UUID targetUUID = UUIDCache.INSTANCE.getUUID(args[0]);
         if (targetUUID == null) {
-            commandSender.sendMessage( "§cThat player cannot be found.");
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.playernotfound"));
             return true;
         }
 
         // Check if the player has a bounty
         Bounty bounty = new Bounty(targetUUID, BountySeekers.compatibility);
         if (bounty.getRewards().size() == 0) {
-            ChatUtils.sendMessage(player, "Could not find an active bounty for that player.");
+            ChatUtils.sendMessage(player, ConfigurableTextHandler.INSTANCE.getValueFormatted("command.nobounty", null, player.getName()));
             return true;
         }
 
@@ -119,13 +120,13 @@ public class CommandImplementations implements ICommandImplementations {
         if (!(commandSender instanceof Player)) return false;
 
         if (args.length == 0) {
-            commandSender.sendMessage("§cUsage: /bounty raise <target player>");
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.usage") + CommandRegistry.BOUNTY_RAISE.getUsage());
             return true;
         }
 
         // Prevents the target from raising their own bounty
         if (commandSender.getName().equalsIgnoreCase(args[0])) {
-            ChatUtils.sendMessage((Player) commandSender, "You can't raise your own bounty!");
+            ChatUtils.sendMessage((Player) commandSender, ConfigurableTextHandler.INSTANCE.getValue("command.ownbounty"));
             return true;
         }
 
@@ -133,7 +134,7 @@ public class CommandImplementations implements ICommandImplementations {
         Player player = (Player) commandSender;
 
         if (target.getUniqueId() == null) {
-            commandSender.sendMessage("§cThat player cannot be found.");
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.playernotfound"));
             return true;
         }
 
@@ -158,13 +159,13 @@ public class CommandImplementations implements ICommandImplementations {
         if (!(commandSender instanceof Player)) return false;
 
         if (args.length == 0) {
-            commandSender.sendMessage("§cUsage: /bounty silentraise <target player>");
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.usage") + CommandRegistry.BOUNTY_SILENT_RAISE);
             return true;
         }
 
         // Prevents the target from raising their own bounty
         if (commandSender.getName().equalsIgnoreCase(args[0])) {
-            ChatUtils.sendMessage((Player) commandSender, "You can't raise your own bounty!");
+            ChatUtils.sendMessage((Player) commandSender, ConfigurableTextHandler.INSTANCE.getValue("command.ownbounty"));
             return true;
         }
 
@@ -172,7 +173,7 @@ public class CommandImplementations implements ICommandImplementations {
         Player player = (Player) commandSender;
 
         if (target.getUniqueId() == null) {
-            commandSender.sendMessage("§cThat player cannot be found.");
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.playernotfound"));
             return true;
         }
 
@@ -194,19 +195,19 @@ public class CommandImplementations implements ICommandImplementations {
             return true;
 
         if (args.length == 0) {
-            commandSender.sendMessage("§cUsage: /bounty reset [target player]");
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.usage") + CommandRegistry.BOUNTY_RESET.getUsage());
             return true;
         }
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
         if (UUIDCache.INSTANCE.getName(target.getUniqueId()) == null) {
-            commandSender.sendMessage("§cThat player cannot be found.");
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.playernotfound"));
             return true;
         }
 
         new Bounty(target.getUniqueId(), BountySeekers.compatibility).reset();
-        ChatUtils.sendMessage(((Player) commandSender).getPlayer(), target.getName() + "'s bounty has been reset!");
-        if (target.isOnline()) ChatUtils.sendMessage(target.getPlayer(), "Your bounty has been reset!");
+        ChatUtils.sendMessage(((Player) commandSender).getPlayer(), ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.reset", null, target.getName()));
+        if (target.isOnline()) ChatUtils.sendMessage(target.getPlayer(), ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.reset.user", null, target.getPlayer().getName()));
 
         return true;
 

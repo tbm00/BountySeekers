@@ -36,7 +36,7 @@ public class RewardFilterGUI extends ConfirmationGUI {
      * @param compatibility The compatibility mode of the current version
      */
     public RewardFilterGUI(CompatibilityMode compatibility, Player user) {
-        super(ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.title", null, null), 9*5, user.getUniqueId());
+        super(ConfigurableTextHandler.INSTANCE.getValue("bounty.reward.filter.title"), 9*5, user.getUniqueId());
         this.user = user;
         this.serializer = new SerializationUtils(compatibility);
         this.inventoryBackup = this.serializer.itemStackArrayToBase64(user.getInventory().getContents());

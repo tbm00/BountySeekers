@@ -11,7 +11,6 @@ import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +39,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
      * Main constructor for the RewardFilterGUI class.
      */
     public BountyRaiseGUI(SimplePlayer target, Benefactor benefactor, CompatibilityMode compatibility) {
-        super(ConfigurableTextHandler.INSTANCE.getValue("bounty.reward.filter.title"), 27, benefactor.getPlayer().getUniqueId());
+        super(ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.title", benefactor.getPlayer().getName(), target.getName()), 27, benefactor.getPlayer().getUniqueId());
         this.bounty = new Bounty(target.getUniqueId(), compatibility);
         this.benefactor = benefactor;
         this.compatibility = compatibility;
