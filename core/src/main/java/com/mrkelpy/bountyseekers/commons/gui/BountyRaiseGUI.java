@@ -151,7 +151,11 @@ public class BountyRaiseGUI extends ConfirmationGUI {
         }
 
         // If that doesn't happen, and there's a normal cancellation, return the items to the player and close the inventory after.
-        this.benefactor.getPlayer().getInventory().setContents(this.benefactor.getInventory().getContents());
+        for (int i = 0; i < this.benefactor.getPlayer().getInventory().getStorageContents().length; i++) {
+
+            if (this.inventory.getItem(i) == null) continue;
+            this.benefactor.getPlayer().getInventory().setItem(i, this.inventory.getItem(i));
+        }
 
         if (this.benefactor.getPlayer().getOpenInventory().getType() == InventoryType.CHEST)
             this.benefactor.getPlayer().closeInventory();
