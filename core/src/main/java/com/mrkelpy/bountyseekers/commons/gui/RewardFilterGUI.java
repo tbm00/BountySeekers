@@ -116,7 +116,12 @@ public class RewardFilterGUI extends ConfirmationGUI {
         }
 
         // If that doesn't happen, and there's a normal cancellation, return the items to the player.
-        this.user.getInventory().setContents(this.inventoryBackup.getContents());
+        for (int i = 0; i < player.getPlayer().getInventory().getStorageContents().length; i++) {
+
+            if (this.inventory.getItem(i) == null) continue;
+            player.getPlayer().getInventory().setItem(i, this.inventory.getItem(i));
+        }
+
         player.updateInventory();
     }
 
