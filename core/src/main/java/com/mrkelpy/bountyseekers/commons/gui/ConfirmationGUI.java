@@ -106,6 +106,12 @@ public abstract class ConfirmationGUI implements Listener {
             return;
         }
 
+        // Prevents any SHIFT_LEFT clicks on red/lime wool. This avoids increasing the amount of items in the confirm/cancel slots.
+        if (event.getClick() == ClickType.SHIFT_LEFT && (event.getCurrentItem().getType() == Material.getMaterial("RED_WOOL") || event.getCurrentItem().getType() == Material.getMaterial("LIME_WOOL"))) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (event.getRawSlot() == this.storageSlots + 1) this.onCancel(player);
         if (event.getRawSlot() == this.storageSlots + 9) this.onConfirm(player);
     }
