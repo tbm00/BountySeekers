@@ -151,7 +151,9 @@ public class BountyRaiseGUI extends ConfirmationGUI {
         }
 
         // If that doesn't happen, and there's a normal cancellation, return the items to the player and close the inventory after.
-        for (int i = 0; i < this.benefactor.getPlayer().getInventory().getStorageContents().length; i++) {
+        for (int i = 0; i < ItemStackUtils.getStorageContents(this.benefactor.getPlayer()).length; i++) {
+
+            if (this.benefactor.getInventory().getItem(i) == null) continue;
             this.benefactor.getPlayer().getInventory().setItem(i, this.benefactor.getInventory().getItem(i));
         }
 
@@ -170,8 +172,12 @@ public class BountyRaiseGUI extends ConfirmationGUI {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
 
-        if (event.getInventory().equals(this.inventory) && this.userUUID.equals(event.getPlayer().getUniqueId()))
+        // If the inventory closed is the GUI's inventory, and the player is the benefactor, cancel the GUI.
+        if (event.getInventory().equals(this.inventory) && this.userUUID.equals(event.getPlayer().getUniqueId())) {
+
+            this.benefactor.getPlayer().setItemOnCursor(null);
             ItemStackUtils.scheduleRunnable(() -> this.onCancel((Player) event.getPlayer()), 1L);
+        }
 
         super.onInventoryClose(event);
     }
