@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="Spigot_1.20.x:jar">
-    <output-path>$USER_HOME$/AppData/Roaming/.Glowberry/servers/BountySeekers20/plugins</output-path>
+    <output-path>$USER_HOME$/AppData/Roaming/.Glowberry/servers/BountySeekers1204/plugins</output-path>
     <root id="archive" name="Spigot_1.20.x.jar">
       <element id="module-output" name="Spigot_1.20.x" />
       <element id="module-output" name="core" />

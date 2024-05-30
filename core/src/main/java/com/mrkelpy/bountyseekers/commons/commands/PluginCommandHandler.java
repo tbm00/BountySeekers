@@ -51,15 +51,26 @@ public class PluginCommandHandler implements CommandExecutor {
      *
      * @param permission The permission to check for
      * @param sender     The sender to check for the permission
+     * @param warn       Whether to send a 'no perms' message to the player or not
      * @return Whether the player has permission or not
      */
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public static boolean checkPermission(String permission, CommandSender sender) {
+    public static boolean checkPermission(String permission, CommandSender sender, boolean warn) {
         if (sender.hasPermission(CommandRegistry.MASTER.getPermission() + ".*") || sender.isOp() || sender.hasPermission(permission))
             return true;
 
-        sender.sendMessage("§cYou do not have permission to use this command");
+        if (warn) sender.sendMessage("§cYou do not have permission to use this command");
         return false;
+    }
+
+    /**
+     * Overloaded method to check for permission, with the default value of "warn" set to true.
+     * @param permission The permission to check for
+     * @param sender    The sender to check for the permission
+     * @return Whether the player has permission or not
+     */
+    public static boolean checkPermission(String permission, CommandSender sender) {
+        return checkPermission(permission, sender, true);
     }
 
     /**
@@ -76,7 +87,7 @@ public class PluginCommandHandler implements CommandExecutor {
     @SuppressWarnings("UnusedReturnValue")
     private boolean parseCommands(CommandSender commandSender, String[] args) {
 
-        if (args.length < 1) return true;
+        if (args.length < 1) args = new String[]{"help"};
 
         // Process the arguments and remove the first element
         String command = args[0];
