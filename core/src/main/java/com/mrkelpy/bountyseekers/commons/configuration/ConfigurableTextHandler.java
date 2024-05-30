@@ -97,7 +97,7 @@ public class ConfigurableTextHandler {
             this.config.set("bounty.reset.user", "Your bounty has been reset!");
 
         if (!this.config.contains("command.usage"))
-            this.config.set("command.usage", "§cUsage");
+            this.config.set("command.usage", "§cUsage: ");
 
         if (!this.config.contains("command.playernotfound"))
             this.config.set("command.playernotfound", "§cThat player could not be found.");
