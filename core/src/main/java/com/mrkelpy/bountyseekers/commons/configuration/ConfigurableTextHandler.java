@@ -90,8 +90,8 @@ public class ConfigurableTextHandler {
         if (!this.config.contains("bounty.display.view"))
             this.config.set("bounty.display.view", "Click here to view this bounty");
 
-        if (!this.config.contains("bounty.reset"))
-            this.config.set("bounty.reset", "%t's bounty has been reset!");
+        if (!this.config.contains("bounty.reset.broadcast"))
+            this.config.set("bounty.reset.broadcast", "%t's bounty has been reset!");
 
         if (!this.config.contains("bounty.reset.user"))
             this.config.set("bounty.reset.user", "Your bounty has been reset!");
@@ -100,7 +100,7 @@ public class ConfigurableTextHandler {
             this.config.set("command.usage", "§cUsage");
 
         if (!this.config.contains("command.playernotfound"))
-            this.config.set("command.playernotfound", "§cThat player cannot be found.");
+            this.config.set("command.playernotfound", "§cThat player could not be found.");
 
         if (!this.config.contains("command.nobounty"))
             this.config.set("command.nobounty", "§cCould not find an active bounty for that player.");

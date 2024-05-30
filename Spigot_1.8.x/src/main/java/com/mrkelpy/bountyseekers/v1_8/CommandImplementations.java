@@ -207,7 +207,7 @@ public class CommandImplementations implements ICommandImplementations {
         }
 
         new Bounty(target.getUniqueId(), BountySeekers.compatibility).reset();
-        ChatUtils.sendMessage(((Player) commandSender).getPlayer(), ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.reset", null, target.getName()));
+        ChatUtils.sendMessage(((Player) commandSender).getPlayer(), ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.reset.broadcast", null, target.getName()));
         if (target.isOnline()) ChatUtils.sendMessage(target.getPlayer(), ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.reset.user", null, target.getPlayer().getName()));
 
         return true;
