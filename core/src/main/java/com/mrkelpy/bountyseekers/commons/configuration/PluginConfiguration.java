@@ -50,5 +50,14 @@ public class PluginConfiguration {
         if (!this.config.contains("general.commands.truly-silent-raise"))
             this.config.set("general.commands.truly-silent-raise", false);
 
+        if (!this.config.contains("general.formatting.broacast-prefix-colour"))
+            this.config.set("general.formatting.broacast-prefix-colour", "&c");
+
+        if (!this.config.contains("general.formatting.broacast-brackets-colour"))
+            this.config.set("general.formatting.broacast-brackets-colour", "&7");
+
+        if (!this.config.contains("general.formatting.broacast-text-colour"))
+            this.config.set("general.formatting.broacast-text-colour", "&e");
+
     }
 }
