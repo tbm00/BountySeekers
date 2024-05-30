@@ -36,7 +36,7 @@ public class PlayerKillListener implements Listener {
     public void onPlayerKill(PlayerDeathEvent event) {
 
         Player killer = event.getEntity().getKiller();
-        if (killer == null || !PluginCommandHandler.checkPermission("bounty.claim", killer, true)) return;
+        if (killer == null || !PluginCommandHandler.checkPermission("bounty.claim", killer, false)) return;
         if (killer.getUniqueId() == event.getEntity().getUniqueId()) return;
 
         Bounty bounty = new Bounty(event.getEntity().getUniqueId(), this.compatibility);
