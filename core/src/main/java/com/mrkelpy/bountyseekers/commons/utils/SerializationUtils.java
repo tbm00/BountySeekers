@@ -72,6 +72,38 @@ public class SerializationUtils {
         }
     }
 
+    /**
+     * Converts an ItemStack[] into a base64 string by encoding all the inner ItemStacks into
+     * base64, and then using a DataStream wrapping a ByteArrayStream to get the global base64.
+     * @param stack The item stack to be encoded
+     * @return The base64 string representing the encoded ItemStack[]
+     */
+    public static String itemStackToBase64(ItemStack[] stack) {
+
+        try {
+            // Initialises the conversion streams
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            DataOutputStream dataStream = new DataOutputStream(byteStream);
+
+            // Writes the stack length into the data stream, followed by iterating over
+            // All the item stacks, adding their base64 into the mix aswell.
+            dataStream.writeInt(stack.length);
+
+            for (int i = 0; i < stack.length; i++) {
+                dataStream.writeUTF(itemToBase64(stack[i]));
+            }
+
+            // Converts the underlying byte stream into base64 and returns it
+            return new String(Base64.getEncoder().encode(byteStream.toByteArray()));
+
+        } catch (IOException e) {
+            PluginConstants.LOGGER.warning("Could not encode item stack into base64.: " + e.getMessage());
+            return null;
+        }
+
+
+    }
+
 
 }
 
