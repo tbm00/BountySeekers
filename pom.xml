@@ -6,7 +6,8 @@
 
     <groupId>com.mrkelpy</groupId>
     <artifactId>BountySeekers</artifactId>
-    <version>1.4.0</version>    <packaging>pom</packaging>
+    <version>1.4.0</version>
+    <packaging>pom</packaging>
     <modules>
         <module>core</module>
         <module>core-nms</module>
@@ -24,7 +25,8 @@
         <module>Spigot_1.17.x</module>
         <module>Spigot_1.18.x</module>
         <module>Spigot_1.19.x</module>
-        <module>Spigot_1.20.x</module>
+        <module>Spigot_1.20-1.20.5</module>
+        <module>Spigot_1.20.5-ONW</module>
     </modules>
 
     <properties>
