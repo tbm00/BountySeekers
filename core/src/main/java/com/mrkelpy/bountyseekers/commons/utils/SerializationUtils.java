@@ -78,7 +78,7 @@ public class SerializationUtils {
      * @param stack The item stack to be encoded
      * @return The base64 string representing the encoded ItemStack[]
      */
-    public static String itemStackToBase64(ItemStack[] stack) {
+    public static String itemStackArrayToBase64(ItemStack[] stack) {
 
         try {
             // Initialises the conversion streams
@@ -97,11 +97,40 @@ public class SerializationUtils {
             return new String(Base64.getEncoder().encode(byteStream.toByteArray()));
 
         } catch (IOException e) {
-            PluginConstants.LOGGER.warning("Could not encode item stack into base64.: " + e.getMessage());
+            PluginConstants.LOGGER.warning("Could not encode item stack array into base64.: " + e.getMessage());
             return null;
         }
+    }
 
+    /**
+     * Converts a base64 string into an ItemStack[], just by doing the inverse of the method above.
+     * @param base64 The base64 string to be decoded into an ItemStack[]
+     * @return The ItemStack[] encoded into the base64 string
+     */
+    public static ItemStack[] itemStackArrayFromBase64(String base64) {
 
+        try {
+
+            // Decodes the base64 data from the string and initialises the conversion streams
+            byte[] itemBytes = Base64.getDecoder().decode(base64);
+            ByteArrayInputStream byteStream = new ByteArrayInputStream(itemBytes);
+            DataInputStream dataStream = new DataInputStream(byteStream);
+
+            // Gets the amount of items in the stack
+            int stackSize = dataStream.readInt();
+            ItemStack[] result = new ItemStack[stackSize];
+
+            // Iterates over the stack, converting the base64 into items and returning it
+            for (int i = 0; i < stackSize; i++) {
+                result[i] = itemFromBase64(dataStream.readUTF());
+            }
+
+            return result;
+
+        } catch (IOException e) {
+            PluginConstants.LOGGER.warning("Could not decode the base64 string into an item stack array.: " + e.getMessage());
+            return null;
+        }
     }
 
 
