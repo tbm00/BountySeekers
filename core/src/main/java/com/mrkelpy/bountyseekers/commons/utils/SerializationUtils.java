@@ -1,17 +1,10 @@
 package com.mrkelpy.bountyseekers.commons.utils;
 
-import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
-import com.mrkelpy.bountyseekers.interfaces.IBukkitReflector;
-import com.mrkelpy.bountyseekers.interfaces.INMSReflector;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
 import java.util.Base64;
 
 /**

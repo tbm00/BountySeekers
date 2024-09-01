@@ -5,7 +5,7 @@ import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
 import com.mrkelpy.bountyseekers.commons.gui.PagedGUI;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
 import com.mrkelpy.bountyseekers.commons.utils.GUIUtils;
-import com.mrkelpy.bountyseekers.v1_9.BountySeekers;
+import com.mrkelpy.bountyseekers.commons.utils.SerializationUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -64,7 +64,7 @@ public class BountyListDisplayGUI extends PagedGUI {
         UUID playerUUID = UUIDCache.INSTANCE.getUUID(event.getCurrentItem().getItemMeta().getDisplayName().substring(4));
         if (playerUUID == null) return;
         String data = FileUtils.readFile(new File(this.bountiesDirectory, playerUUID + ".bounty"));
-        new BountyDisplayGUI(this.player, BountySeekers.SERIALIZER.itemStackArrayFromBase64(data)).openInventory();
+        new BountyDisplayGUI(this.player, SerializationUtils.itemStackArrayFromBase64(data)).openInventory();
     }
 
     /**

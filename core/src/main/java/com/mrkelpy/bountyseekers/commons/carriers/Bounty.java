@@ -1,7 +1,6 @@
 package com.mrkelpy.bountyseekers.commons.carriers;
 
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
-import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
 import com.mrkelpy.bountyseekers.commons.utils.SerializationUtils;
@@ -44,26 +43,19 @@ public class Bounty {
     private final File bountyFile;
 
     /**
-     * The serialization utility that serializes and deserializes the bounty file
-     */
-    private final SerializationUtils serializationUtils;
-
-    /**
      * Main constructor for the Bounty class. From a player's name, go to their bounty file and extract the needed
      * information for the Bounty class. This automatically handles the base64 to List conversion for the rewards.
      *
      * @param playerUUID The target player's UUID.
-     * @param compat     The compatibility mode to use for the Bounty class.
      */
-    public Bounty(UUID playerUUID, CompatibilityMode compat) {
+    public Bounty(UUID playerUUID) {
         this.target = UUIDCache.INSTANCE.getName(playerUUID);
         this.targetUUID = playerUUID;
-        this.serializationUtils = new SerializationUtils(compat);
 
         this.bountyFile = new File(FileUtils.makeDirectory("bounties"), playerUUID + ".bounty");
         String bountyInformation = this.bountyFile.exists() ? FileUtils.readFile(this.bountyFile) : null;
 
-        ItemStack[] rewardArray = bountyInformation != null ? this.serializationUtils.itemStackArrayFromBase64(bountyInformation) : null;
+        ItemStack[] rewardArray = bountyInformation != null ? SerializationUtils.itemStackArrayFromBase64(bountyInformation) : null;
         this.rewards = bountyInformation != null && rewardArray != null ? new ArrayList<>(Arrays.asList(rewardArray)) : new ArrayList<>();
         this.raisedStackCount = 0;
     }
@@ -131,8 +123,8 @@ public class Bounty {
     public void save() {
         List<ItemStack> compressedRewards = ItemStackUtils.compress(this.rewards);
 
-        if (compressedRewards.size() > 0)
-            FileUtils.writeFile(this.bountyFile, this.serializationUtils.itemStackArrayToBase64(compressedRewards.toArray(new ItemStack[0])));
+        if (!compressedRewards.isEmpty())
+            FileUtils.writeFile(this.bountyFile, SerializationUtils.itemStackArrayToBase64(compressedRewards.toArray(new ItemStack[0])));
 
         UUIDCache.INSTANCE.set(this.targetUUID, this.target);
     }

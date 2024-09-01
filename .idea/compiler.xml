@@ -22,11 +22,11 @@
         <module name="Spigot_1.8.x" />
         <module name="Spigot_1.9.x" />
         <module name="core" />
-        <module name="core-nms" />
         <module name="Crucible_1.7.10" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="core-nms" target="1.8" />
       <module name="ReleaseAggregator" target="16" />
       <module name="Spigot_1.19.x (1)" target="1.8" />
       <module name="Spigot_1.19.x (2)" target="1.8" />

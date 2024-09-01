@@ -1,14 +1,12 @@
 package com.mrkelpy.bountyseekers.v1_15;
 
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
-import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.PluginConfiguration;
-import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.events.PlayerJoinListener;
 import com.mrkelpy.bountyseekers.commons.events.PlayerKillListener;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
-import com.mrkelpy.bountyseekers.commons.utils.SerializationUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -22,8 +20,6 @@ public class
 BountySeekers extends JavaPlugin {
 
     public static File DATA_FOLDER;
-    public static CompatibilityMode compatibility = CompatibilityMode.v1_11;
-    public static final SerializationUtils SERIALIZER = new SerializationUtils(compatibility);
 
     @Override
     public void onEnable() {
@@ -32,7 +28,7 @@ BountySeekers extends JavaPlugin {
 
         getCommand("bounty").setExecutor(new PluginCommandHandler(new CommandImplementations()));
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerKillListener(BountySeekers.compatibility), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerKillListener(), this);
 
         PluginConstants.LOGGER.info(String.format("Enabled %s v%s", PluginConstants.PLUGIN_NAME, this.getDescription().getVersion()));
         loadConfigs();

@@ -3,17 +3,14 @@ package com.mrkelpy.bountyseekers.commons.gui;
 import com.mrkelpy.bountyseekers.commons.carriers.Benefactor;
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
 import com.mrkelpy.bountyseekers.commons.carriers.SimplePlayer;
-import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.PluginConfiguration;
-import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
-import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -22,7 +19,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,16 +31,14 @@ public class BountyRaiseGUI extends ConfirmationGUI {
 
     private final Bounty bounty;
     private final Benefactor benefactor;
-    private final CompatibilityMode compatibility;
 
     /**
      * Main constructor for the RewardFilterGUI class.
      */
-    public BountyRaiseGUI(SimplePlayer target, Benefactor benefactor, CompatibilityMode compatibility) {
+    public BountyRaiseGUI(SimplePlayer target, Benefactor benefactor) {
         super(ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.raise.title", benefactor.getPlayer().getName(), target.getName()), 27, benefactor.getPlayer().getUniqueId());
-        this.bounty = new Bounty(target.getUniqueId(), compatibility);
+        this.bounty = new Bounty(target.getUniqueId());
         this.benefactor = benefactor;
-        this.compatibility = compatibility;
     }
 
     /**
@@ -69,7 +63,7 @@ public class BountyRaiseGUI extends ConfirmationGUI {
         }
 
         int rewardLimit = InternalConfigs.INSTANCE.getConfig().getInt("reward-limit");
-        ItemStack[] rewardFilter = FileUtils.getRewardFilter(this.compatibility);
+        ItemStack[] rewardFilter = FileUtils.getRewardFilter();
 
         // Adds all the rewards inside the GUI to the bounty, and adds the benefactor.
         for (int i = 0; this.storageSlots > i; i++) {
