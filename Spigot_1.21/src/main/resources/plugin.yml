@@ -2,7 +2,7 @@ name: BountySeekers
 version: 1.4.0
 description: This plugin allows players to place, raise, and claim bounties on other players' heads, with an item-reward based system.
 author: MrKelpy
-main: com.mrkelpy.bountyseekers.v1_20_5_ONW.BountySeekers
+main: com.mrkelpy.bountyseekers.v1_21.BountySeekers
 api-version: 1.14
 
 commands:

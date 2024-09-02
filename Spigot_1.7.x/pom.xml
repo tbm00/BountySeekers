@@ -44,13 +44,7 @@
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.mrkelpy</groupId>
-            <artifactId>core-nms</artifactId>
-            <version>1.0</version>
-        </dependency>
     </dependencies>
-
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

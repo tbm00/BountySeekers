@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.v1_20.gui;
+package com.mrkelpy.bountyseekers.v1_20_5_ONW.gui;
 
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.gui.PagedGUI;

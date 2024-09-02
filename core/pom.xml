@@ -26,12 +26,5 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mrkelpy</groupId>
-            <artifactId>core-nms</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
-
+        </dependency>    </dependencies>
 </project>

@@ -22,6 +22,7 @@
         <module name="Spigot_1.8.x" />
         <module name="Spigot_1.9.x" />
         <module name="core" />
+        <module name="Spigot_1.21" />
         <module name="Crucible_1.7.10" />
       </profile>
     </annotationProcessing>

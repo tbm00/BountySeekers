@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.v1_20.gui;
+package com.mrkelpy.bountyseekers.v1_21.gui;
 
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;

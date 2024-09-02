@@ -51,9 +51,7 @@
             <groupId>com.mrkelpy</groupId>
             <artifactId>core</artifactId>
             <version>1.0</version>
-        </dependency>
-    </dependencies>
-    <repositories>
+        </dependency>    </dependencies>    <repositories>
         <!-- This adds the Spigot Maven repository to the build -->
         <repository>
             <id>spigot-repo</id>

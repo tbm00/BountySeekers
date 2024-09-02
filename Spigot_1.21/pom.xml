@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Spigot_1.20.5-ONW</artifactId>
+    <artifactId>Spigot_1.21</artifactId>
 
     <build>
         <plugins>

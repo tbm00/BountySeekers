@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.v1_20;
+package com.mrkelpy.bountyseekers.v1_21;
 
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
