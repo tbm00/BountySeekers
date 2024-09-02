@@ -21,7 +21,7 @@ import java.util.*;
 /**
  * This abstract class handles the pagination for any GUI that extends it.
  */
-public abstract class PagedGUI implements Listener {
+public abstract class  PagedGUI implements Listener {
 
     // This inventory instance should be used by any classes inheriting from the class.
     protected final Inventory inventory;

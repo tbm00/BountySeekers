@@ -10,6 +10,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/Tools/ReleaseAggregator/pom.xml" />
+        <option value="$PROJECT_DIR$/core-nms/pom.xml" />
       </set>
     </option>
   </component>

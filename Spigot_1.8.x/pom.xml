@@ -5,7 +5,7 @@
     <parent>
         <artifactId>BountySeekers</artifactId>
         <groupId>com.mrkelpy</groupId>
-        <version>1.4.0</version>    </parent>
+        <version>1.4.1</version>    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Spigot_1.8.x</artifactId>
@@ -46,7 +46,5 @@
             <artifactId>core</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
-        </dependency>
-    </dependencies>
-
+        </dependency>    </dependencies>
 </project>

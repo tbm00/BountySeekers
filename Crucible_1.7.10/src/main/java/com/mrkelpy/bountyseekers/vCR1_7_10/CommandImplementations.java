@@ -38,7 +38,7 @@ public class CommandImplementations implements ICommandImplementations {
         if (!(commandSender instanceof Player)) return false;
         Player player = (Player) commandSender;
 
-        new RewardFilterGUI(BountySeekers.compatibility, player).openInventory();
+        new RewardFilterGUI(player).openInventory();
         return true;
     }
 
@@ -92,8 +92,8 @@ public class CommandImplementations implements ICommandImplementations {
         }
 
         // Check if the player has a bounty
-        Bounty bounty = new Bounty(targetUUID, BountySeekers.compatibility);
-        if (bounty.getRewards().size() == 0) {
+        Bounty bounty = new Bounty(targetUUID);
+        if (bounty.getRewards().isEmpty()) {
             ChatUtils.sendMessage(player, ConfigurableTextHandler.INSTANCE.getValueFormatted("command.nobounty", null, player.getName()));
             return true;
         }
@@ -138,7 +138,7 @@ public class CommandImplementations implements ICommandImplementations {
             return true;
         }
 
-        new BountyRaiseGUI(target, new Benefactor(player, false), BountySeekers.compatibility).openInventory();
+        new BountyRaiseGUI(target, new Benefactor(player, false)).openInventory();
         return true;
     }
 
@@ -177,7 +177,7 @@ public class CommandImplementations implements ICommandImplementations {
             return true;
         }
 
-        new BountyRaiseGUI(target, new Benefactor(player, true), BountySeekers.compatibility).openInventory();
+        new BountyRaiseGUI(target, new Benefactor(player, true)).openInventory();
         return true;
     }
 
@@ -205,7 +205,7 @@ public class CommandImplementations implements ICommandImplementations {
             return true;
         }
 
-        new Bounty(target.getUniqueId(), BountySeekers.compatibility).reset();
+        new Bounty(target.getUniqueId()).reset();
         ChatUtils.sendMessage(((Player) commandSender).getPlayer(), ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.reset.broadcast", null, target.getName()));
         if (target.isOnline()) ChatUtils.sendMessage(target.getPlayer(), ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.reset.user", null, target.getPlayer().getName()));
 

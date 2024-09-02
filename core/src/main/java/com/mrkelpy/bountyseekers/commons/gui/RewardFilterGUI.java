@@ -2,10 +2,11 @@ package com.mrkelpy.bountyseekers.commons.gui;
 
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
-import com.mrkelpy.bountyseekers.commons.enums.CompatibilityMode;
-import com.mrkelpy.bountyseekers.commons.utils.*;
+import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
+import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
+import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;
+import com.mrkelpy.bountyseekers.commons.utils.SerializationUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,23 +29,20 @@ import java.util.List;
 public class RewardFilterGUI extends ConfirmationGUI {
 
     private final Player user;
-    private final SerializationUtils serializer;
     private final Inventory inventoryBackup;
 
     /**
      * Main constructor for the RewardFilterGUI class.
      * @param user The player who is setting the filter
-     * @param compatibility The compatibility mode of the current version
      */
-    public RewardFilterGUI(CompatibilityMode compatibility, Player user) {
+    public RewardFilterGUI(Player user) {
         super(ConfigurableTextHandler.INSTANCE.getValue("bounty.reward.filter.title"), 9*5, user.getUniqueId());
         this.user = user;
-        this.serializer = new SerializationUtils(compatibility);
 
         this.inventoryBackup = Bukkit.createInventory(null, InventoryType.CHEST.getDefaultSize() + 9);
         this.inventoryBackup.setContents(ItemStackUtils.getStorageContents(this.user));
 
-        ItemStack[] items = FileUtils.getRewardFilter(compatibility);
+        ItemStack[] items = FileUtils.getRewardFilter();
         if (items == null) return;
 
         Arrays.stream(items).filter(item -> item != null && item.getType() != Material.AIR).forEach(this.inventory::addItem);
@@ -82,9 +79,11 @@ public class RewardFilterGUI extends ConfirmationGUI {
 
         // Serializes the items into a base64 string and updates the config.
         items = ItemStackUtils.removeDuplicates(items);
-        String serialized = this.serializer.itemStackArrayToBase64(items.toArray(new ItemStack[0]));
+        String serialized = !items.isEmpty() ? SerializationUtils.itemStackArrayToBase64(items.toArray(new ItemStack[0])) : null;
+
         InternalConfigs.INSTANCE.getConfig().set("reward-filter", serialized);
         InternalConfigs.INSTANCE.save();
+
         ChatUtils.sendMessage(player, "Updated the reward filters!");
     }
 
