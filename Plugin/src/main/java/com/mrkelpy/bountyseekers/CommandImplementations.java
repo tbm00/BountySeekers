@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.v1_21;
+package com.mrkelpy.bountyseekers;
 
 import com.mrkelpy.bountyseekers.commons.carriers.Benefactor;
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
@@ -8,11 +8,11 @@ import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
-import com.mrkelpy.bountyseekers.commons.gui.BountyRaiseGUI;
-import com.mrkelpy.bountyseekers.commons.gui.RewardFilterGUI;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
-import com.mrkelpy.bountyseekers.v1_21.gui.BountyDisplayGUI;
-import com.mrkelpy.bountyseekers.v1_21.gui.BountyListDisplayGUI;
+import com.mrkelpy.bountyseekers.gui.BountyDisplayGUI;
+import com.mrkelpy.bountyseekers.gui.BountyListDisplayGUI;
+import com.mrkelpy.bountyseekers.gui.BountyRaiseGUI;
+import com.mrkelpy.bountyseekers.gui.RewardFilterGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -93,7 +93,7 @@ public class CommandImplementations implements ICommandImplementations {
 
         // Check if the player has a bounty
         Bounty bounty = new Bounty(targetUUID);
-        if (bounty.getRewards().size() == 0) {
+        if (bounty.getRewards().isEmpty()) {
             ChatUtils.sendMessage(player, ConfigurableTextHandler.INSTANCE.getValueFormatted("command.nobounty", null, player.getName()));
             return true;
         }

@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.commons.events;
+package com.mrkelpy.bountyseekers.events;
 
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;

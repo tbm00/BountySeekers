@@ -5,6 +5,7 @@ import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -72,6 +73,9 @@ public interface ICommandImplementations {
         for (CommandRegistry command : CommandRegistry.values()) {
             commandSender.sendMessage(String.format("§e%s §7-> §f%s", command.getUsage(), command.getDescription()) + "\n");
         }
+
+        commandSender.sendMessage(Bukkit.getVersion());
+        commandSender.sendMessage(Bukkit.getServer().getVersion());
 
         return true;
     }

@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="Spigot_1.21:jar">
+  <artifact type="jar" name="Plugin:1.21:jar">
     <output-path>$USER_HOME$/AppData/Roaming/.Glowberry/servers/BountySeekers121/plugins</output-path>
-    <root id="archive" name="Spigot_1.21.jar">
-      <element id="module-output" name="Spigot_1.21" />
+    <root id="archive" name="Plugin.jar">
+      <element id="module-output" name="Plugin" />
       <element id="module-output" name="core" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar" path-in-jar="/" />
     </root>

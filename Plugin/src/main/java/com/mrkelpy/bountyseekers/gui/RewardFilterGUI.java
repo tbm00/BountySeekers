@@ -1,7 +1,8 @@
-package com.mrkelpy.bountyseekers.commons.gui;
+package com.mrkelpy.bountyseekers.gui;
 
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
+import com.mrkelpy.bountyseekers.commons.gui.ConfirmationGUI;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;

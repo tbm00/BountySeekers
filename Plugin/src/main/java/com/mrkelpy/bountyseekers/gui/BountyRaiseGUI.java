@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.commons.gui;
+package com.mrkelpy.bountyseekers.gui;
 
 import com.mrkelpy.bountyseekers.commons.carriers.Benefactor;
 import com.mrkelpy.bountyseekers.commons.carriers.Bounty;
@@ -6,6 +6,7 @@ import com.mrkelpy.bountyseekers.commons.carriers.SimplePlayer;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.PluginConfiguration;
+import com.mrkelpy.bountyseekers.commons.gui.ConfirmationGUI;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
 import com.mrkelpy.bountyseekers.commons.utils.ItemStackUtils;

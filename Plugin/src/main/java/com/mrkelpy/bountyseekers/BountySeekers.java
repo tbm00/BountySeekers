@@ -1,12 +1,12 @@
-package com.mrkelpy.bountyseekers.v1_21;
+package com.mrkelpy.bountyseekers;
 
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.PluginConfiguration;
-import com.mrkelpy.bountyseekers.commons.events.PlayerJoinListener;
-import com.mrkelpy.bountyseekers.commons.events.PlayerKillListener;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
+import com.mrkelpy.bountyseekers.events.PlayerJoinListener;
+import com.mrkelpy.bountyseekers.events.PlayerKillListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -16,8 +16,7 @@ import java.io.File;
  * tasks.
  */
 @SuppressWarnings("ResultOfMethodCallIgnored")
-public class
-BountySeekers extends JavaPlugin {
+public class BountySeekers extends JavaPlugin {
 
     public static File DATA_FOLDER;
 
