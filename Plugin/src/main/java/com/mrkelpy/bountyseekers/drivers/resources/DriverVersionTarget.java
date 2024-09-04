@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.drivers;
+package com.mrkelpy.bountyseekers.drivers.resources;
 
 /**
  * This annotation serves as an indicator of which version a method inside a Driver

@@ -1,4 +1,4 @@
-package com.mrkelpy.bountyseekers.drivers;
+package com.mrkelpy.bountyseekers.drivers.resources;
 
 import com.mrkelpy.bountyseekers.commons.MinecraftVersion;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
