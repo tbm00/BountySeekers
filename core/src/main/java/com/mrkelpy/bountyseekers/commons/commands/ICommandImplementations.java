@@ -1,9 +1,6 @@
 package com.mrkelpy.bountyseekers.commons.commands;
 
-import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
-import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
-import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -26,37 +23,7 @@ public interface ICommandImplementations {
 
     boolean setRewardFiltersCommand(CommandSender commandSender, String[] args);
 
-    /**
-     * Changes the configured reward limit for bounties.
-     *
-     * @param commandSender The sender of the command
-     * @param args          The arguments of the command
-     * @return Boolean, feedback to the caller
-     */
-    default boolean setRewardLimitCommand(CommandSender commandSender, String[] args) {
-
-        if (!PluginCommandHandler.checkPermission(CommandRegistry.SET_REWARD_LIMIT.getPermission(), commandSender))
-            return true;
-
-        if (args.length != 1) {
-            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.usage") + CommandRegistry.SET_REWARD_LIMIT.getUsage());
-            return true;
-        }
-
-        try {
-            // Changes the reward limit to the amount specified
-            InternalConfigs.INSTANCE.getConfig().set("reward-limit", Integer.parseInt(args[0]));
-            InternalConfigs.INSTANCE.save();
-            commandSender.sendMessage(ChatUtils.sendMessage(null, "Reward limit set to " + Integer.parseInt(args[0])));
-            return true;
-
-        } catch (NumberFormatException e) {
-            // If the argument is not a number, send an error message
-            commandSender.sendMessage("Limit must be numeric.");
-            return true;
-        }
-
-    }
+    boolean setRewardLimitCommand(CommandSender commandSender, String[] args);
 
     /**
      * The default implementation of this method iterates through every registered command and

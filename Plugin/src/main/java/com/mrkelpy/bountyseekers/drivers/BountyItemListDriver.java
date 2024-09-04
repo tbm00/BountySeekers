@@ -2,9 +2,9 @@ package com.mrkelpy.bountyseekers.drivers;
 
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
+import com.mrkelpy.bountyseekers.commons.drivers.resources.DriverVersionTarget;
+import com.mrkelpy.bountyseekers.commons.drivers.resources.FeatureDriver;
 import com.mrkelpy.bountyseekers.commons.utils.GUIUtils;
-import com.mrkelpy.bountyseekers.drivers.resources.DriverVersionTarget;
-import com.mrkelpy.bountyseekers.drivers.resources.FeatureDriver;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

@@ -6,6 +6,7 @@ import com.mrkelpy.bountyseekers.commons.carriers.SimplePlayer;
 import com.mrkelpy.bountyseekers.commons.commands.ICommandImplementations;
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
+import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
 import com.mrkelpy.bountyseekers.commons.utils.ChatUtils;
@@ -40,6 +41,38 @@ public class CommandImplementations implements ICommandImplementations {
 
         new RewardFilterGUI(player).openInventory();
         return true;
+    }
+
+    /**
+     * Changes the configured reward limit for bounties.
+     *
+     * @param commandSender The sender of the command
+     * @param args          The arguments of the command
+     * @return Boolean, feedback to the caller
+     */
+    @Override
+    public boolean setRewardLimitCommand(CommandSender commandSender, String[] args) {
+
+        if (!PluginCommandHandler.checkPermission(CommandRegistry.SET_REWARD_LIMIT.getPermission(), commandSender))
+            return true;
+
+        if (args.length != 1) {
+            commandSender.sendMessage(ConfigurableTextHandler.INSTANCE.getValue("command.usage") + CommandRegistry.SET_REWARD_LIMIT.getUsage());
+            return true;
+        }
+
+        try {
+            // Changes the reward limit to the amount specified
+            InternalConfigs.INSTANCE.getConfig().set("reward-limit", Integer.parseInt(args[0]));
+            InternalConfigs.INSTANCE.save();
+            commandSender.sendMessage(ChatUtils.sendMessage(null, "Reward limit set to " + Integer.parseInt(args[0])));
+            return true;
+
+        } catch (NumberFormatException e) {
+            // If the argument is not a number, send an error message
+            commandSender.sendMessage("Limit must be numeric.");
+            return true;
+        }
     }
 
     /**
@@ -94,7 +127,7 @@ public class CommandImplementations implements ICommandImplementations {
         // Check if the player has a bounty
         Bounty bounty = new Bounty(targetUUID);
         if (bounty.getRewards().isEmpty()) {
-            ChatUtils.sendMessage(player, ConfigurableTextHandler.INSTANCE.getValueFormatted("command.nobounty", null, player.getName()));
+            ChatUtils.sendMessage(player, ConfigurableTextHandler.INSTANCE.getValue("command.nobounty"));
             return true;
         }
 
