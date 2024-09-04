@@ -48,7 +48,7 @@ public abstract class FeatureDriver<T> {
         int keyIndex = handlers.keySet().stream().collect(Collectors.toList()).indexOf(key);
 
         // If not, get the previous key and call its method.
-        MinecraftVersion previousKey = handlers.keySet().stream().collect(Collectors.toList()).get(--keyIndex < 0 ? 0 : --keyIndex);
+        MinecraftVersion previousKey = handlers.keySet().stream().collect(Collectors.toList()).get(--keyIndex < 0 ? 0 : keyIndex);
         Method handler = handlers.get(previousKey);
 
         // If the index is 0 with no handler available, then return null.

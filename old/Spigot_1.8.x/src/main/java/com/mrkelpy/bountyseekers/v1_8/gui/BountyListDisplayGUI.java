@@ -58,11 +58,15 @@ public class BountyListDisplayGUI extends PagedGUI {
     @EventHandler
     public void onItemClick(InventoryClickEvent event) {
         super.onItemClick(event);
+
         if (event.getRawSlot() > this.storageSlots || event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR)
             return;
+
         if (!event.getWhoClicked().getUniqueId().equals(this.player.getUniqueId())) return;
+
         UUID playerUUID = UUIDCache.INSTANCE.getUUID(event.getCurrentItem().getItemMeta().getDisplayName().substring(4));
         if (playerUUID == null) return;
+
         String data = FileUtils.readFile(new File(this.bountiesDirectory, playerUUID + ".bounty"));
         new BountyDisplayGUI(this.player, SerializationUtils.itemStackArrayFromBase64(data)).openInventory();
     }
