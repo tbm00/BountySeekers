@@ -17,7 +17,7 @@ import java.util.UUID;
 public class BountyItemListDriver extends FeatureDriver<ItemStack> {
 
     /**
-     * Handles the creation of names arrow itemstacks for the bounty listings.
+     * Handles the creation of named arrow itemstacks for the bounty listings.
      * @param args The UUID of the player to create a head for
      * @return A renamed arrow to be put into the listing
      */
