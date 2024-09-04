@@ -11,7 +11,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 /**
  * This generic abstract class serves as the base class for all drivers, returning T
@@ -39,24 +39,23 @@ public abstract class FeatureDriver<T> {
         MinecraftVersion mcVersion = new MinecraftVersion(version);
 
         // If the key doesn't exist inside the handlers list, add it in as a pivot
-        if (handlers.containsKey(version)) {
+        if (!handlers.containsKey(mcVersion)) {
             handlers.put(mcVersion, null);
         }
 
         // Gets the index of a key with the same version as the current one
-        Stream<MinecraftVersion> keysetStream = handlers.keySet().stream();
-        MinecraftVersion key = (MinecraftVersion) keysetStream.filter(x -> x.getVersion().equals(version)).toArray()[0];
-        int keyIndex = keysetStream.toList().indexOf(key);
-
-        // If the index is 0, then return null.
-        if (keyIndex == 0) return null;
+        MinecraftVersion key = (MinecraftVersion) handlers.keySet().stream().filter(x -> x.getVersion().equals(version)).toArray()[0];
+        int keyIndex = handlers.keySet().stream().collect(Collectors.toList()).indexOf(key);
 
         // If not, get the previous key and call its method.
-        MinecraftVersion previousKey = keysetStream.toList().get(--keyIndex);
+        MinecraftVersion previousKey = handlers.keySet().stream().collect(Collectors.toList()).get(--keyIndex < 0 ? 0 : --keyIndex);
         Method handler = handlers.get(previousKey);
 
+        // If the index is 0 with no handler available, then return null.
+        if (keyIndex == 0 && handler == null) return null;
+
         try {
-            return (T) handler.invoke(args);
+            return (T) handler.invoke(this, new Object[] {args});
 
         // If there's any issue with the called invocation, log it and return null
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -81,7 +80,9 @@ public abstract class FeatureDriver<T> {
 
         Pattern regex = Pattern.compile("(?<=MC: ).*(?=\\))");
         Matcher match = regex.matcher(versionInformation);
-        return match.group(1);
+        match.find();
+
+        return match.group(0);
     }
 
     /**
@@ -93,8 +94,9 @@ public abstract class FeatureDriver<T> {
     protected SortedMap<MinecraftVersion, Method> mapVersionsToHandlers() {
 
         // Filters all the methods in the class removing non-annotated ones
-        Method[] handlerMethods = Arrays.stream(this.getClass().getMethods()).toList().stream().filter(
-                x -> x.isAnnotationPresent(DriverVersionTarget.class)).toList().toArray(new Method[0]);
+        Method[] handlerMethods = Arrays.stream(this.getClass().getDeclaredMethods())
+                .filter(method -> method.isAnnotationPresent(DriverVersionTarget.class))
+                .toArray(Method[]::new);
 
         // Map the minecraft versions to their respective methods
         SortedMap<MinecraftVersion, Method> handlerMappings = new TreeMap<MinecraftVersion, Method>();
@@ -104,7 +106,7 @@ public abstract class FeatureDriver<T> {
             // Goes through every method and adds it to the mapping
             Method handler = handlerMethods[i];
             DriverVersionTarget annotation = handler.getAnnotation(DriverVersionTarget.class);
-            MinecraftVersion version = new MinecraftVersion(annotation.version());
+            MinecraftVersion version = new MinecraftVersion(annotation.value());
 
             handlerMappings.put(version, handler);
         }

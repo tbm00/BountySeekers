@@ -30,23 +30,28 @@ public class MinecraftVersion implements Comparable {
 
     /**
      * Comparable implementation; Used to compare versions such that 1.7.10 < 1.20.1
-     * @param version the object to be compared.
+     * @param mcVersion the object to be compared.
      * @return The comparison value
      */
     @Override
-    public int compareTo(Object version) {
+    public int compareTo(Object mcVersion) {
 
         // Gets the partitions of both versions
-        int[] mainVersion = this.convertToIntArray(this.version.split("."));
-        int[] comparisonVersion = this.convertToIntArray(this.version.split("."));
+        int[] mainVersion = this.convertToIntArray(this.version.split("\\."));
+        int[] comparisonVersion = this.convertToIntArray(((MinecraftVersion) mcVersion).getVersion().split("\\."));
 
         // Compare each main partition in cascade, checking if any of its parts are
         // either greater or lesser than comparison one.
         if (mainVersion[0] > comparisonVersion[0]) return 1;
         if (mainVersion[0] < comparisonVersion[0]) return -1;
 
+        // In case that's the only version info we have, the versions are the same here
+        if (mainVersion.length == 1 || comparisonVersion.length == 1) return 0;
+
         if (mainVersion[1] > comparisonVersion[1]) return 1;
         if (mainVersion[1] < comparisonVersion[1]) return -1;
+
+        if (mainVersion.length == 2 || comparisonVersion.length == 2) return 0; // Same here
 
         if (mainVersion[2] > comparisonVersion[2]) return 1;
         if (mainVersion[2] < comparisonVersion[2]) return -1;

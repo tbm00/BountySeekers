@@ -4,8 +4,8 @@ import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.UUIDCache;
 import com.mrkelpy.bountyseekers.commons.gui.PagedGUI;
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
-import com.mrkelpy.bountyseekers.commons.utils.GUIUtils;
 import com.mrkelpy.bountyseekers.commons.utils.SerializationUtils;
+import com.mrkelpy.bountyseekers.drivers.BountyItemListDriver;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +14,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -90,15 +89,15 @@ public class BountyListDisplayGUI extends PagedGUI {
         List<ItemStack> bountyItemList = new ArrayList<>();
         if (bountyFiles == null) return bountyItemList;
 
+        // Initialises the driver to be used to get the items displayed
+        BountyItemListDriver driver = new BountyItemListDriver();
+
         for (File bountyFile : bountyFiles) {
 
             // Creates the base item representing the bounty
             UUID playerUUID = UUID.fromString(bountyFile.getName().replace(".bounty", ""));
 
-            String playername = UUIDCache.INSTANCE.getName(playerUUID);
-            String bountyViewText = ConfigurableTextHandler.INSTANCE.getValueFormatted("bounty.display.view", null, playername);
-            ItemStack item = GUIUtils.getPlayerHeadPlaceholder(
-                    playerUUID, "§e" + playername, Collections.singletonList(bountyViewText));
+            ItemStack item = driver.call(playerUUID);
 
             // Adds the item with the custom tag to the list, as a bukkit copy.
             bountyItemList.add(item);
