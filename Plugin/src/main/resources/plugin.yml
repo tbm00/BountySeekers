@@ -5,50 +5,52 @@ author: MrKelpy
 main: com.mrkelpy.bountyseekers.BountySeekers
 api-version: 1.14
 
+
 commands:
 
-  bounty:
-    usage: /bounty <command>
-    description: Master command.
-    tab-completer:
-      - help
-      - list
-      - check
-      - raise
-      - silentraise
-      - reset
-      - setrewardlimit
-      - setrewardfilters
+    bounty:
+        usage: /bounty <command>
+        description: Master command.
+        tab-completer:
+            - help
+            - list
+            - check
+            - raise
+            - silentraise
+            - reset
+            - setrewardlimit
+            - setrewardfilters
+
 
 permissions:
-  bounty.help:
-    description: Allows the player to view the help menu.
-    default: true
+    bounty.help:
+        description: Allows the player to view the help menu.
+        default: true
 
-  bounty.list:
-    description: Allows the player to view the list of active bounties.
-    default: true
+    bounty.list:
+        description: Allows the player to view the list of active bounties.
+        default: true
 
-  bounty.check:
-    description: Allows the player to check the bounty on another player.
-    default: true
+    bounty.check:
+        description: Allows the player to check the bounty on another player.
+        default: true
 
-  bounty.raise:
-    description: Allows the player to raise a bounty on another player.
-    default: true
+    bounty.raise:
+        description: Allows the player to raise a bounty on another player.
+        default: true
 
-  bounty.silent.raise:
-    description: Allows the player to raise a bounty on another player without revealing their identity.
-    default: true
+    bounty.silent.raise:
+        description: Allows the player to raise a bounty on another player without revealing their identity.
+        default: true
 
-  bounty.reset:
-    description: Allows the player to reset a bounty on another player.
-    default: op
+    bounty.reset:
+        description: Allows the player to reset a bounty on another player.
+        default: op
 
-  bounty.admin.setrewardlimit:
-    description: Allows the player to set the maximum reward limit for bounties.
-    default: op
+    bounty.admin.setrewardlimit:
+        description: Allows the player to set the maximum reward limit for bounties.
+        default: op
 
-  bounty.admin.setrewardfilters:
-    description: Allows the player to set the filters for bounty rewards.
-    default: op
+    bounty.admin.setrewardfilters:
+        description: Allows the player to set the filters for bounty rewards.
+        default: op

@@ -1,5 +1,6 @@
 package com.mrkelpy.bountyseekers;
 
+import com.mrkelpy.bountyseekers.commons.commands.AutoTabCompleter;
 import com.mrkelpy.bountyseekers.commons.commands.PluginCommandHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.ConfigurableTextHandler;
 import com.mrkelpy.bountyseekers.commons.configuration.InternalConfigs;
@@ -25,7 +26,9 @@ public class BountySeekers extends JavaPlugin {
         DATA_FOLDER = this.getDataFolder();
         if (!DATA_FOLDER.exists()) DATA_FOLDER.mkdirs();
 
-        getCommand("bounty").setExecutor(new PluginCommandHandler(new CommandImplementations()));
+        this.getCommand("bounty").setExecutor(new PluginCommandHandler(new CommandImplementations()));
+        this.getCommand("bounty").setTabCompleter(new AutoTabCompleter());
+
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerKillListener(), this);
 

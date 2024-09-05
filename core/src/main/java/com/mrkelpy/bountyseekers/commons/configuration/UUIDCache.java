@@ -54,7 +54,7 @@ public class UUIDCache {
      * Caches a player's UUID and name.
      */
     public void set(UUID uuid, String name) {
-        this.cache.set(uuid.toString(), name);
+        this.cache.set(uuid.toString().toLowerCase(), name);
         this.cache.set(name, uuid.toString());
 
         try {
