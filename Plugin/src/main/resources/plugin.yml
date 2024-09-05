@@ -4,7 +4,7 @@ description: This plugin allows players to place, raise, and claim bounties on o
 author: MrKelpy
 main: com.mrkelpy.bountyseekers.BountySeekers
 api-version: 1.14
-
+softdepend: [PlaceholderAPI]
 
 commands:
 
