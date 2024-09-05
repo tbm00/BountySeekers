@@ -36,7 +36,8 @@ public class SerializationUtils {
         }
 
         catch (IOException e) {
-            PluginConstants.LOGGER.warning("Could not encode item into base64.: " + e.getMessage());
+            PluginConstants.LOGGER.warning("Could not encode item into base64.: " + e.getCause().getMessage());
+            PluginConstants.LOGGER.severe(LoggingUtils.getStackTrace(e));
             return "";
         }
     }
@@ -60,7 +61,8 @@ public class SerializationUtils {
         }
 
         catch (IOException | ClassNotFoundException e) {
-            PluginConstants.LOGGER.warning("Could not decode base64 string into item.: " + e.getMessage());
+            PluginConstants.LOGGER.warning("Could not decode base64 string into item.: " + e.getCause().getMessage());
+            PluginConstants.LOGGER.severe(LoggingUtils.getStackTrace(e));
             return null;
         }
     }
@@ -90,7 +92,8 @@ public class SerializationUtils {
             return new String(Base64.getEncoder().encode(byteStream.toByteArray()));
 
         } catch (IOException e) {
-            PluginConstants.LOGGER.warning("Could not encode item stack array into base64.: " + e.getMessage());
+            PluginConstants.LOGGER.warning("Could not encode item stack array into base64.: " + e.getCause().getMessage());
+            PluginConstants.LOGGER.severe(LoggingUtils.getStackTrace(e));
             return null;
         }
     }
@@ -121,7 +124,8 @@ public class SerializationUtils {
             return result;
 
         } catch (IOException e) {
-            PluginConstants.LOGGER.warning("Could not decode the base64 string into an item stack array.: " + e.getMessage());
+            PluginConstants.LOGGER.warning("Could not decode the base64 string into an item stack array.: " + e.getCause().getMessage());
+            PluginConstants.LOGGER.severe(LoggingUtils.getStackTrace(e));
             return null;
         }
     }

@@ -1,6 +1,7 @@
 package com.mrkelpy.bountyseekers.commons.commands;
 
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -28,14 +29,20 @@ public class AutoTabCompleter implements TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        // Initialises the suggestions list and ensures the autocomplete only works at the start
-        List<String> suggestions = new ArrayList<>();
-        if (strings.length > 1) return suggestions;
-
+        // Gets the master command name
         String masterCommand = CommandRegistry.MASTER.getUsage().replace("/", "");
 
-        if (s.equals(masterCommand))
+        // Initialises the suggestions list and ensures the autocomplete only works at the start
+        List<String> suggestions = new ArrayList<>();
+        if (strings.length > 2 || !s.equals(masterCommand)) return suggestions;
+
+        // The first argument will be the available subcommands
+        if (strings.length == 1)
             suggestions.addAll(this.getPrimarySubCommands());
+
+        // The second argument will be the available players, that is actively modified by its input
+        if (strings.length == 2)
+            suggestions.addAll(this.getOnlinePlayers(strings[1], 10));
 
         return suggestions;
 
@@ -51,6 +58,24 @@ public class AutoTabCompleter implements TabCompleter {
         return Arrays.stream(registry)
                 .filter(x -> x.getUsage().split(" ").length >= 2)
                 .map(x -> x.getUsage().split(" ")[1]).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets a filtered and limited number of online players
+     * @param nameFilter A name filter to match against the first letters of the online players
+     * @param limit A limit of matches to be returned
+     * @return A list of player names matching the filter and limit
+     */
+    public List<String> getOnlinePlayers(String nameFilter, int limit) {
+
+        List<String> playerlist = Bukkit.getServer().getOnlinePlayers().stream()
+                .map(x -> x.getName())
+                .collect(Collectors.toList());
+
+        return playerlist.stream()
+                .filter(x -> nameFilter == "" ? true : x.toLowerCase().startsWith(nameFilter.toLowerCase()))
+                .limit(limit)
+                .collect(Collectors.toList());
     }
 
 }

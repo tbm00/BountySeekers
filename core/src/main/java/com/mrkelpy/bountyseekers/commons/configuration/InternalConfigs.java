@@ -1,6 +1,8 @@
 package com.mrkelpy.bountyseekers.commons.configuration;
 
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
+import com.mrkelpy.bountyseekers.commons.utils.LoggingUtils;
+import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -39,7 +41,8 @@ public class InternalConfigs {
         try {
             this.config.save(this.configFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            PluginConstants.LOGGER.severe(e.getCause().getMessage());
+            PluginConstants.LOGGER.severe(LoggingUtils.getStackTrace(e));
         }
     }
 
