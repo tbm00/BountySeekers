@@ -1,6 +1,8 @@
 package com.mrkelpy.bountyseekers.commons.configuration;
 
 import com.mrkelpy.bountyseekers.commons.utils.FileUtils;
+import com.mrkelpy.bountyseekers.commons.utils.LoggingUtils;
+import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -26,7 +28,8 @@ public class UUIDCache {
         try {
             cache.save(this.uuidCacheFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            PluginConstants.LOGGER.severe(e.getCause().getMessage());
+            PluginConstants.LOGGER.severe(LoggingUtils.getStackTrace(e));
         }
 
         return cache;
@@ -47,6 +50,12 @@ public class UUIDCache {
      * @return The player's UUID
      */
     public UUID getUUID(String string) {
+
+        // Permament case-insensitive UUID check, to return post 2.0 uuids
+        String insensitiveUUID = this.cache.getString(string.toLowerCase());
+        if (insensitiveUUID != null) return UUID.fromString(insensitiveUUID);
+
+        // Backwards compatibility case sensitive check
         return this.cache.getString(string) != null ? UUID.fromString(this.cache.getString(string)) : null;
     }
 
@@ -54,13 +63,21 @@ public class UUIDCache {
      * Caches a player's UUID and name.
      */
     public void set(UUID uuid, String name) {
-        this.cache.set(uuid.toString().toLowerCase(), name);
-        this.cache.set(name, uuid.toString());
+
+        // Backwards compatible case sensitive entry removal
+        if (this.cache.contains(name)) {
+            this.cache.set(name, null);
+        }
+
+        // Add names in case insensitive form
+        this.cache.set(uuid.toString(), name.toLowerCase());
+        this.cache.set(name.toLowerCase(), uuid.toString());
 
         try {
             cache.save(this.uuidCacheFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            PluginConstants.LOGGER.severe(e.getCause().getMessage());
+            PluginConstants.LOGGER.severe(LoggingUtils.getStackTrace(e));
         }
     }
 
