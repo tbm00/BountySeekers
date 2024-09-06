@@ -8,6 +8,8 @@ import com.mrkelpy.bountyseekers.commons.configuration.PluginConfiguration;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import com.mrkelpy.bountyseekers.events.PlayerJoinListener;
 import com.mrkelpy.bountyseekers.events.PlayerKillListener;
+import com.mrkelpy.bountyseekers.placeholders.BountyPlaceholderExpansion;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -33,12 +35,30 @@ public class BountySeekers extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerKillListener(), this);
 
         PluginConstants.LOGGER.info(String.format("Enabled %s v%s", PluginConstants.PLUGIN_NAME, this.getDescription().getVersion()));
+        this.hookPlaceholderAPI();
         loadConfigs();
     }
 
     @Override
     public void onDisable() {
         PluginConstants.LOGGER.info(String.format("Disabled %s v%s", PluginConstants.PLUGIN_NAME, this.getDescription().getVersion()));
+    }
+
+    /**
+     * Hooks and registers the PlaceholderAPI resources and plugin
+     */
+    public void hookPlaceholderAPI() {
+
+        // Skips the placeholder API hooking if it isn't installed
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            PluginConstants.LOGGER.info("Placeholder API not found - Skipping hook.");
+            return;
+        }
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) { //
+            new BountyPlaceholderExpansion().register();
+        }
+
     }
 
     /**
