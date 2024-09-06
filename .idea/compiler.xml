@@ -24,6 +24,7 @@
         <module name="core" />
         <module name="Spigot_1.21" />
         <module name="Crucible_1.7.10" />
+        <module name="Plugin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

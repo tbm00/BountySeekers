@@ -1,6 +1,7 @@
 package com.mrkelpy.bountyseekers.commons.commands;
 
 import com.mrkelpy.bountyseekers.commons.enums.CommandRegistry;
+import com.mrkelpy.bountyseekers.commons.utils.LoggingUtils;
 import com.mrkelpy.bountyseekers.commons.utils.PluginConstants;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -103,7 +104,7 @@ public class PluginCommandHandler implements CommandExecutor {
         } catch (InvocationTargetException e) {
             commandSender.sendMessage("§cAn internal error happened whilst running this command. Please report this issue to the plugin developer.");
             PluginConstants.LOGGER.warning("An internal error happened whilst running <" + command + "> with arguments [" + String.join(", ", args) + "]");
-            PluginConstants.LOGGER.warning("Error: " + e.getCause().getMessage());
+            PluginConstants.LOGGER.warning(LoggingUtils.getStackTrace(e));
             return true;
 
         } catch (NoSuchMethodException | IllegalAccessException ignored) {

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Plugin:1.7:jar2">
+    <output-path>$USER_HOME$/AppData/Roaming/.Glowberry/servers/BountySeekers17/plugins</output-path>
+    <root id="archive" name="Plugin.jar">
+      <element id="module-output" name="Plugin" />
+      <element id="module-output" name="core" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-lang/commons-lang/2.6/commons-lang-2.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
