@@ -23,7 +23,7 @@ public class BountyPlaceholderExpansion extends PlaceholderExpansion {
 
     @Override
     public @NotNull @NonNls String getVersion() {
-        return "1.0.0";
+        return "1.0.1";
     }
 
     @Override
@@ -44,6 +44,10 @@ public class BountyPlaceholderExpansion extends PlaceholderExpansion {
 
         if (identifier.equals("rewardcount")) {
             return String.valueOf(bounty.getRewards().stream().count());
+        }
+
+        if (identifier.equals("hasbounty")) {
+            return bounty.getRewards().stream().count()>0 ? "true" : "false";
         }
 
         return null;
