@@ -16,18 +16,13 @@ public class ChatUtils {
     public static String sendMessage(Player player, String message) {
 
         // Get the formatting colours from the configuration
-        String bracketColour = PluginConfiguration.INSTANCE.getConfig().getString("general.formatting.broacast-brackets-colour");
-        String prefixColour = PluginConfiguration.INSTANCE.getConfig().getString("general.formatting.broacast-prefix-colour");
-        String textColour = PluginConfiguration.INSTANCE.getConfig().getString("general.formatting.broacast-text-colour");
+        String prefix = PluginConfiguration.INSTANCE.getConfig().getString("general.formatting.broadcast-prefix");
 
         // Replaces "&" with "§" for Minecraft formatting
-        bracketColour = bracketColour.replace("&", "§");
-        prefixColour = prefixColour.replace("&", "§");
-        textColour = textColour.replace("&", "§");
+        prefix = prefix.replace("&", "§");
 
         // Builds the formatted message with the colours and the plugin name
-        String formattedMessage = String.format("%s[%s%s%s] %s" + message,
-                bracketColour, prefixColour, PluginConstants.PLUGIN_NAME, bracketColour, textColour);
+        String formattedMessage = prefix+message;
 
         if (player != null) player.sendMessage(formattedMessage);
         return formattedMessage;
